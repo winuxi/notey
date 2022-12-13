@@ -20,7 +20,7 @@
     <fragment
         android:id="@+id/AddEditNote"
         android:name="com.ravenioet.notey.screens.AddOrEditNote"
-        android:label="@string/detail_label"
+        android:label="@string/add_label"
         tools:layout="@layout/add_edit_note">
     </fragment>
 

@@ -11,6 +11,7 @@ import com.ravenioet.notey.database.NoteDao;
 import com.ravenioet.notey.database.NoteyDB;
 import com.ravenioet.notey.models.Command;
 import com.ravenioet.notey.models.Note;
+import com.ravenioet.notey.viewmodel.NoteyViewModel;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -134,5 +135,71 @@ public class NoteyRepo {
     }
     */
 
+    public void publishNote( Note note){
+        /*Retrofit retrofit = new Retrofit.Builder()
+                //.baseUrl(UserManager.loadIp(getContext()))
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        APIProvider service = retrofit.create(APIProvider.class);
+        File file = new File(Uri.parse(note.getCover_image()).getPath());
+        RequestBody requestFile = RequestBody.create(file, MediaType.parse("multipart/form-data"));
+        MultipartBody.Part photo = MultipartBody.Part.createFormData("cover", file.getName(), requestFile);
+        RequestBody title = MultipartBody.create(note.getTitle(), MediaType.parse("text/plain"));
+        RequestBody description = MultipartBody.create(note.getDescription(), MediaType.parse("text/plain"));
+        RequestBody author = MultipartBody.create(note.getAuthor(), MediaType.parse("text/plain"));
+        RequestBody price = MultipartBody.create(note.getPrice(), MediaType.parse("text/plain"));
+        RequestBody publisher = MultipartBody.create(note.getPublisher_name(), MediaType.parse("text/plain"));
+        RequestBody date = MultipartBody.create(note.getPublished_date(), MediaType.parse("text/plain"));
+        RequestBody publisher_pic = MultipartBody.create(note.getPublisher_photo(), MediaType.parse("text/plain"));
+        RequestBody target = MultipartBody.create("add_note", MediaType.parse("text/plain"));
+        RequestBody userId = MultipartBody.create(note.getUser_id(), MediaType.parse("text/plain"));
+
+        Call<Status> call = service.addNotePro(
+                target,
+                userId,
+                title,
+                description,
+                author,
+                price,
+                publisher,
+                date,
+                publisher_pic,
+                photo
+        );
+
+
+        call.enqueue(new Callback<Status>() {
+            @Override
+            public void onResponse(@NotNull Call<Status> call, @NotNull Response<Status> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    binding.addNote.setText("Publish Note");
+                    binding.addNote.setEnabled(true);
+                    Status status = response.body();
+                    if (status.isFlag()) {
+                        Note note1 = status.getNote();
+                        note1.setFlag(1);
+
+                        createNote(note1);
+                    } else {
+                        showSnack("Error "+status.getError_message());
+                        Log.d("notes", status.getError_message());
+                    }
+                } else {
+                    Log.d("notes", response.code() + " code");
+                    binding.addNote.setText("Publish Note");
+                    binding.addNote.setEnabled(true);
+                    showSnack("Unable to process, code: "+response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<Status> call, @NotNull Throwable t) {
+                Log.d("notes", "error: " + t);
+                binding.addNote.setText("Publish Note");
+                binding.addNote.setEnabled(true);
+                showSnack("Network timeout");
+            }
+        });*/
+    }
 
 }

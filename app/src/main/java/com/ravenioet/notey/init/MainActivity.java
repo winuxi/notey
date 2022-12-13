@@ -1,4 +1,4 @@
-package com.ravenioet.notey;
+package com.ravenioet.notey.init;
 
 import android.os.Bundle;
 
@@ -14,6 +14,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.ravenioet.notey.R;
 import com.ravenioet.notey.databinding.ActivityMainBinding;
 
 import android.view.Menu;
