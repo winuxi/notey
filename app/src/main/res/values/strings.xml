@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Notey</string>
+    <string name="action_settings">Settings</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="notey_label">Notey</string>
+    <string name="detail_label">Detail</string>
+    <string name="add_label">Add</string>
+    <string name="edit_label">Edit</string>
+</resources>

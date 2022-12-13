@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/toorc"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/nav"
+        android:layout_width="match_parent"
+        android:textColor="@color/white"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:padding="5dp"
+        android:background="@color/purple_500"
+        android:text="Date of Birth"
+        android:layout_height="40dp"/>
+        <RelativeLayout
+            android:id="@+id/calander_ciew"
+            android:layout_below="@id/nav"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <DatePicker
+                android:id="@+id/dat_chooser"
+                android:layout_width="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:datePickerMode="spinner"
+                android:calendarViewShown="false"
+                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_below="@id/dat_chooser"
+                android:layout_height="wrap_content">
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/cal_cancel"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:textColor="@color/black"
+                    app:backgroundTint="@color/white"
+                    android:layout_margin="3dp"
+                    android:layout_height="60dp"
+                    android:text="Cancel" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/cal_okay"
+                    android:layout_width="0dp"
+                    android:layout_margin="3dp"
+                    android:layout_weight="1"
+                    android:layout_height="60dp"
+                    android:text="Okay" />
+            </LinearLayout>
+
+        </RelativeLayout>
+</RelativeLayout>
