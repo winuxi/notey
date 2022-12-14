@@ -45,19 +45,6 @@ public class NoteDetail extends Fragment implements NoteListener {
                 public void onChanged(Note book) {
                     binding.bookTitle.setText(book.getTitle());
                     binding.bookDesc.setText(book.getBody());
-                    //binding.auther.setText(book.getPublisher_name());
-                    //binding.publishedDate.setText(book.getPublished_date());
-                    //binding.downloads.setText(getRandomNumberDownloads());
-                    //binding.bookPrice.setText(book.getPrice() +".ETB");
-                    /*RequestOptions options = new RequestOptions()
-                            .placeholder(R.drawable.ic_baseline_menu_book_24)
-                            .error(R.drawable.ic_baseline_menu_book_24)*//*.circleCrop()*//*;
-                            */
-                    /*Glide.with(getContext()).load(UserManager.loadIp(getContext())+book.getCover_image())
-                            .apply(options).into(binding.bookPic);
-                    Glide.with(getContext()).load(UserManager.loadIp(getContext())+book.getPublisher_photo())
-                            .apply(options).into(binding.puber);
-                    */
                 }
             });
         }

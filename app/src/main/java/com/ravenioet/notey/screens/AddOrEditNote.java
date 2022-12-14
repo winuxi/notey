@@ -60,12 +60,12 @@ public class AddOrEditNote extends Fragment implements NoteListener {
         boolean forEdit = false;
         if (noteViewModel.getSharedNoteEdit() != null) {
             forEdit = true;
-            binding.noteTitleVal.setText(noteViewModel.getSharedNoteEdit().getTitle());
+            binding.noteTitle.setText(noteViewModel.getSharedNoteEdit().getTitle());
             binding.noteBody.setText(noteViewModel.getSharedNoteEdit().getBody());
         }
         boolean finalForEdit = forEdit;
         binding.addNote.setOnClickListener(view -> {
-            String noteTitle = String.valueOf(binding.noteTitleVal.getText());
+            String noteTitle = String.valueOf(binding.noteTitle.getText());
             String noteDesc = String.valueOf(binding.noteBody.getText());
             if (isNotEmpty(noteTitle) && isMoreThan4(noteTitle) &&
                     isNotEmpty(noteDesc) && isMoreThan10(noteDesc)
@@ -96,14 +96,13 @@ public class AddOrEditNote extends Fragment implements NoteListener {
             } else {
                 if (imagedLoaded) {
                     if (isNotEmpty(noteTitle) && isMoreThan4(noteTitle)) {
-                        binding.noteTitleLay.setError(null);
                         if (isNotEmpty(noteDesc) && isMoreThan10(noteDesc)) {
                             //author
                         } else {
                             showSnack("Note Body Must be more than 10 characters");
                         }
                     } else {
-                        binding.noteTitleLay.setError("Note Title Must be more than 3 characters");
+                        showSnack("Note Title Must be more than 3 characters");
                     }
                 } else {
                     Toast.makeText(getContext(),

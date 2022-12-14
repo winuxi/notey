@@ -58,7 +58,8 @@ public class NoteStore extends Fragment {
 
         bookAdapter.onItemClickListener(note -> {
             bookViewModel.setSharedNote(note);
-            Navigation.findNavController(root).navigate(R.id.NoteDetail);
+            //Navigation.findNavController(root).navigate(R.id.NoteDetail);
+            Navigation.findNavController(root).navigate(R.id.AddEditNote);
         });
         binding.fab.setOnClickListener(new View.OnClickListener() {
             @Override

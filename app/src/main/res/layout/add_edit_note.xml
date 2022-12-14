@@ -17,22 +17,35 @@
                 android:layout_height="wrap_content">
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_margin="10dp"
                     android:layout_height="wrap_content">
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/note_title_lay"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="1dp"
-                        android:hint="Note Title"
-                        android:paddingTop="13dp"
-                        app:boxCornerRadiusBottomEnd="10dp"
-                        app:boxCornerRadiusBottomStart="10dp"
-                        app:boxCornerRadiusTopEnd="10dp"
-                        app:boxCornerRadiusTopStart="10dp"
+                        android:id="@+id/title_nav"
+                        android:background="@color/purple_200"
+                        android:layout_height="wrap_content">
+                        <EditText
+                            android:id="@+id/note_title"
+                            android:background="@drawable/round_back"
+                            android:layout_width="match_parent"
+                            android:padding="5dp"
+                            android:hint="Title"
+                            android:layout_margin="5dp"
+                            android:layout_height="50dp"/>
+                    </LinearLayout>
+                  <!--  <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/note_title_lay"
+                        android:background="@color/purple_200"
+                        app:boxBackgroundColor="@color/white"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:padding="3dp"
+                        app:boxCornerRadiusBottomEnd="5dp"
+                        app:boxCornerRadiusBottomStart="5dp"
+                        app:boxCornerRadiusTopEnd="5dp"
+                        app:boxCornerRadiusTopStart="5dp"
                         app:boxStrokeColor="@color/purple_200"
                         app:errorEnabled="true"
+                        android:textColorHint="@color/purple_200"
                         app:hintTextColor="@color/purple_200"
                         app:startIconDrawable="@drawable/ic_baseline_sticky_note_2_24">
 
@@ -44,22 +57,23 @@
                             android:maxLines="1" />
 
                     </com.google.android.material.textfield.TextInputLayout>
-
+-->
                     <EditText
                         android:id="@+id/note_body"
-                        android:padding="10dp"
+                        android:padding="5dp"
                         android:layout_width="match_parent"
-                        android:minLines="10"
+                        android:minLines="20"
+                        android:hint="Write note..."
                         android:gravity="top|start"
-                        android:background="@drawable/round_back"
-                        android:layout_below="@id/note_title_lay"
-                        android:layout_height="wrap_content"/>
+                        android:background="@drawable/editor_back"
+                        android:layout_below="@id/title_nav"
+                        android:layout_height="match_parent"/>
                 </RelativeLayout>
             </RelativeLayout>
         </ScrollView>
         <com.google.android.material.button.MaterialButton
             android:layout_width="match_parent"
-            android:text="Publish Note"
+            android:text="Save"
             android:id="@+id/addNote"
             android:layout_alignParentBottom="true"
             android:layout_marginEnd="100dp"
