@@ -112,8 +112,7 @@ public class SecuredInput extends Fragment {
             keyValue.setText(newValue);
         });
         clear.setOnLongClickListener(view -> {
-            String prevValue = keyValue.getText().toString();
-            String newValue = clear(prevValue);
+            String newValue = "";
             keyValue.setText(newValue);
             return false;
         });

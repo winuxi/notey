@@ -7,8 +7,10 @@
     android:layout_height="match_parent">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:padding="25dp"
-        android:background="@color/purple_200"
+        android:padding="5dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginEnd="35dp"
+        android:background="@drawable/pincode_back"
         android:layout_above="@id/number_pad"
         android:id="@+id/top_panel"
         android:layout_height="wrap_content">
@@ -19,7 +21,8 @@
             android:layout_centerHorizontal="true"
             android:textColor="@color/white"
             android:padding="5dp"
-            android:maxLines="5"
+            android:maxLines="1"
+            android:maxLength="8"
             android:text="0000"
             android:textSize="35sp"
             android:layout_height="wrap_content"/>
