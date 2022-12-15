@@ -10,7 +10,7 @@
         android:layout_height="match_parent">
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_above="@id/addNote"
+            android:layout_above="@id/bottom_tool"
             android:layout_height="match_parent">
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -30,7 +30,7 @@
                             android:padding="5dp"
                             android:hint="Title"
                             android:layout_margin="5dp"
-                            android:layout_height="50dp"/>
+                            android:layout_height="45dp"/>
                     </LinearLayout>
                   <!--  <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/note_title_lay"
@@ -65,20 +65,48 @@
                         android:minLines="20"
                         android:hint="Write note..."
                         android:gravity="top|start"
-                        android:background="@drawable/editor_back"
+                        android:background="@color/white"
                         android:layout_below="@id/title_nav"
                         android:layout_height="match_parent"/>
                 </RelativeLayout>
             </RelativeLayout>
         </ScrollView>
-        <com.google.android.material.button.MaterialButton
+        <LinearLayout
             android:layout_width="match_parent"
-            android:text="Save"
-            android:id="@+id/addNote"
+            android:id="@+id/bottom_tool"
             android:layout_alignParentBottom="true"
-            android:layout_marginEnd="100dp"
-            android:layout_centerHorizontal="true"
-            android:layout_height="60dp"/>
+            android:background="@color/purple_200"
+            android:padding="5dp"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/ic_delete"
+                android:background="@drawable/round_back"
+                android:padding="5dp"
+                android:layout_margin="5dp"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/ic_baseline_delete_24"
+                android:layout_height="40dp"/>
+            <ImageView
+                android:id="@+id/ic_save"
+                android:background="@drawable/round_back"
+                android:padding="5dp"
+                android:layout_margin="5dp"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/ic_baseline_save_24"
+                android:layout_height="40dp"/>
+            <ImageView
+                android:id="@+id/ic_lock"
+                android:background="@drawable/round_back"
+                android:padding="5dp"
+                android:layout_margin="5dp"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/ic_baseline_lock_open_24"
+                android:layout_height="40dp"/>
+
+        </LinearLayout>
     </RelativeLayout>
 
 </RelativeLayout>

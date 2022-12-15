@@ -19,7 +19,7 @@ import com.ravenioet.notey.adapters.NoteAdapter;
 import com.ravenioet.notey.databinding.FragmentHomeBinding;
 import com.ravenioet.notey.viewmodel.NoteyViewModel;
 
-public class NoteStore extends Fragment {
+public class DeletedNotes extends Fragment {
 
     private FragmentHomeBinding binding;
     private ProgressBar progressBar;
@@ -45,7 +45,7 @@ public class NoteStore extends Fragment {
         bookAdapter = new NoteAdapter(getContext(), 2,2);
         news_list.setAdapter(bookAdapter);
 
-        noteyViewModel.getAllNotes().observe(getViewLifecycleOwner(), books -> {
+        noteyViewModel.getFromBin().observe(getViewLifecycleOwner(), books -> {
             bookAdapter.setNote(books);
             progressBar.setVisibility(View.GONE);
             if (books.size() == 0) {
@@ -60,6 +60,7 @@ public class NoteStore extends Fragment {
             //Navigation.findNavController(root).navigate(R.id.NoteDetail);
             Navigation.findNavController(root).navigate(R.id.AddEditNote);
         });
+        binding.fab.setVisibility(View.GONE);
         binding.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

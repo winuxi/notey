@@ -15,6 +15,7 @@ import android.widget.DatePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
@@ -50,27 +51,54 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class AddOrEditNote extends Fragment implements NoteListener {
 
     private AddEditNoteBinding binding;
+    Note note;
     View root;
+    NoteyViewModel noteViewModel;
+    NoteListener listener;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        NoteyViewModel noteViewModel =
+        noteViewModel =
                 new ViewModelProvider(requireActivity()).get(NoteyViewModel.class);
         binding = AddEditNoteBinding.inflate(inflater, container, false);
         root = binding.getRoot();
+        listener = this;
         boolean forEdit = false;
         if (noteViewModel.getSharedNoteEdit() != null) {
             forEdit = true;
-            binding.noteTitle.setText(noteViewModel.getSharedNoteEdit().getTitle());
-            binding.noteBody.setText(noteViewModel.getSharedNoteEdit().getBody());
+            note = noteViewModel.getSharedNoteEdit();
+            nativeFlag = note.getFlag();
+            binding.noteTitle.setText(note.getTitle());
+            binding.noteBody.setText(note.getBody());
+            if (note.getFlag() == 2) {
+                binding.icLock.setImageResource(R.drawable.ic_baseline_lock_24);
+            }
+            else if (note.getFlag() == 1) {
+                binding.icLock.setImageResource(R.drawable.ic_baseline_lock_open_24);
+            }
+            else if (note.getFlag() == 3) {
+                binding.icDelete.setImageResource(R.drawable.ic_baseline_restore_from_trash_24);
+            }else {
+
+            }
+
+
+        } else {
+            note = new Note("", "", "date", "", 1);
+            nativeFlag = note.getFlag();
+        }
+        if (!forEdit) {
+            //binding.icLock.setVisibility(View.GONE);
+            binding.icDelete.setVisibility(View.GONE);
         }
         boolean finalForEdit = forEdit;
-        binding.addNote.setOnClickListener(view -> {
-            String noteTitle = String.valueOf(binding.noteTitle.getText());
-            String noteDesc = String.valueOf(binding.noteBody.getText());
+        binding.icSave.setOnClickListener(view -> {
+            String noteTitle = String.valueOf(binding.noteTitle.getText()).trim();
+            String noteDesc = String.valueOf(binding.noteBody.getText()).trim();
             if (isNotEmpty(noteTitle) && isMoreThan4(noteTitle) &&
                     isNotEmpty(noteDesc) && isMoreThan10(noteDesc)
                     && imagedLoaded && isNotEmpty(resultUri.toString())) {
-                Log.d("addNote","passed");
+                Log.d("addNote", "passed");
                 //User user = UserManager.loadUser(getContext());
                 /*Note note = new Note(1, noteTitle,
                         noteDesc, resultUri.toString(),
@@ -79,20 +107,23 @@ public class AddOrEditNote extends Fragment implements NoteListener {
                         String.valueOf(getRandomNumberDownloads()),
                         author, user.getPhoto());
                 */
-                Note note = new Note(noteTitle,noteDesc,"date","",1);
 
                 if (finalForEdit) {
-                    note.setId(noteViewModel.getSharedNoteEdit().getId());
-                    Command command = new Command(this);
-                    command.setNote(note);
-                    noteViewModel.updateNote(command);
-                    Navigation.findNavController(binding.getRoot()).navigateUp();
+                    Command command = new Command(listener);
+                    Note newNote = new Note(noteTitle, noteDesc, "date", "", note.getFlag());
+                    if (note.isDiffer(newNote)) {
+                        newNote.setId(note.getId());
+                        command.setNote(newNote);
+                        noteViewModel.updateNote(command);
+                    } else {
+                        showSnack("Nothing to update");
+                    }
                 } else {
-                    Command command = new Command(this);
+                    note = new Note(noteTitle, noteDesc, "date", "", nativeFlag);
+                    Command command = new Command(listener);
                     command.setNote(note);
                     noteViewModel.createNote(command);
                 }
-                //Navigation.findNavController(binding.getRoot()).navigate(R.id.navigation_home);
             } else {
                 if (imagedLoaded) {
                     if (isNotEmpty(noteTitle) && isMoreThan4(noteTitle)) {
@@ -111,21 +142,53 @@ public class AddOrEditNote extends Fragment implements NoteListener {
             }
         });
 
-        /*binding.profilePic.setOnClickListener(view -> CropImage.activity()
-                .setGuidelines(CropImageView.Guidelines.ON)
-                .setAspectRatio(6,4)
-                .start(getContext(),this));
-        */
+        boolean finalForEdit1 = forEdit;
+        binding.icDelete.setOnClickListener(view -> {
+            if (finalForEdit1) {
+                Command command = new Command(listener);
+                command.setNote(note);
+                if(note.getFlag() == 3){
+                    noteViewModel.restore(command);
+                }else {
+                    noteViewModel.addToTrash(command);
+                }
+            }
+        });
+        binding.icLock.setOnClickListener(view -> {
+            nativeFlag = note.getFlag();
+            if (nativeFlag == 2) {
+                note.setFlag(1);
+                binding.icLock.setImageResource(R.drawable.ic_baseline_lock_open_24);
+                showSnack("Note Unsecured");
+                Command command = new Command(listener);
+                command.setNote(note);
+                noteViewModel.restore(command);
+            }
+            if (nativeFlag == 1) {
+                note.setFlag(2);
+                binding.icLock.setImageResource(R.drawable.ic_baseline_lock_24);
+                showSnack("Note Secured");
+                Command command = new Command(listener);
+                command.setNote(note);
+                noteViewModel.secure(command);
+            }
+        });
+
         return root;
     }
+
+    int nativeFlag = -1;
+
     public int getRandomNumberDownloads() {
         Random rnd = new Random();
         return rnd.nextInt(999999);
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+        noteViewModel.setSharedNote(null);
     }
 
     private boolean isNotEmpty(String value) {
@@ -159,26 +222,35 @@ public class AddOrEditNote extends Fragment implements NoteListener {
         }
         */
     }
-    private void showSnack(String message){
+
+    private void showSnack(String message) {
         if (binding != null)
-            Snackbar.make(binding.getRoot(),message,Snackbar.LENGTH_LONG).show();
+            Snackbar.make(binding.getRoot(), message, Snackbar.LENGTH_LONG).show();
     }
 
     @Override
-    public void noteCreated(Note note) {
-        Toast.makeText(getContext(),"Note Created",Toast.LENGTH_LONG).show();
+    public void noteCreated(Command command) {
+        showSnack(command.getMessage());
         Navigation.findNavController(root).navigateUp();
     }
 
     @Override
-    public void noteUpdated(Note note) {
-        Toast.makeText(getContext(),"Note Updated",Toast.LENGTH_LONG).show();
+    public void noteUpdated(Command command) {
+        showSnack(command.getMessage());
         Navigation.findNavController(root).navigateUp();
     }
 
     @Override
-    public void noteDeleted(Note note) {
-        Toast.makeText(getContext(),"Note Deleted",Toast.LENGTH_LONG).show();
+    public void noteDeleted(Command command) {
+        showSnack(command.getMessage());
         Navigation.findNavController(root).navigateUp();
     }
+
+    @Override
+    public void error(String error) {
+        //error = note.getId()+"-"+error;
+        showSnack(error);
+    }
+
+
 }

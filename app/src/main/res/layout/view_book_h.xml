@@ -16,7 +16,6 @@
                 android:layout_width="40dp"
                 android:layout_margin="4dp"
                 android:elevation="4dp"
-                android:padding="5dp"
                 android:id="@+id/book_pic"
                 android:src="@drawable/ic_baseline_sticky_note_2_24"
                 android:layout_height="50dp"/>
@@ -40,6 +39,14 @@
                 android:layout_toEndOf="@id/book_pic"
                 android:layout_below="@id/book_title"
                 android:layout_height="wrap_content" />
+            <ImageView
+                android:id="@+id/lock"
+                android:layout_width="wrap_content"
+                android:src="@drawable/ic_baseline_lock_24"
+                android:layout_margin="5dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:layout_height="wrap_content"/>
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 </RelativeLayout>

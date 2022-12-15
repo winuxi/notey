@@ -3,6 +3,8 @@ package com.ravenioet.notey.models;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.util.Objects;
+
 @Entity(tableName = "notes")
 public class Note {
     @PrimaryKey(autoGenerate = true)
@@ -67,5 +69,10 @@ public class Note {
 
     public void setFlag(int flag) {
         this.flag = flag;
+    }
+
+    public boolean isDiffer(Note note){
+        return !Objects.equals(this.title, note.getTitle())
+                || !Objects.equals(this.body, note.getBody()) || !Objects.equals(this.flag, note.getFlag());
     }
 }

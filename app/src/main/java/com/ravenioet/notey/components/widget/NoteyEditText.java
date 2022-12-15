@@ -1,4 +1,4 @@
-package com.ravenioet.notey.components;
+package com.ravenioet.notey.components.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;

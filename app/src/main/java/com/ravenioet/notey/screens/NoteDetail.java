@@ -77,17 +77,22 @@ public class NoteDetail extends Fragment implements NoteListener {
     }
 
     @Override
-    public void noteCreated(Note note) {
+    public void noteCreated(Command note) {
 
     }
 
     @Override
-    public void noteUpdated(Note note) {
+    public void noteUpdated(Command note) {
 
     }
 
     @Override
-    public void noteDeleted(Note note) {
+    public void noteDeleted(Command note) {
+
+    }
+
+    @Override
+    public void error(String error) {
 
     }
 }

@@ -25,11 +25,11 @@ public class NoteyViewModel extends AndroidViewModel {
     public LiveData<List<Note>> getAllNotes(){
         return noteRepo.load_all_notes();
     }
-    public LiveData<List<Note>> getFromCart(){
-        return noteRepo.load_cart();
+    public LiveData<List<Note>> getSecuredNotes(){
+        return noteRepo.load_secured();
     }
-    public LiveData<List<Note>> getFromShelf(){
-        return noteRepo.load_shelf();
+    public LiveData<List<Note>> getFromBin(){
+        return noteRepo.load_deleted();
     }
 
     public LiveData<Note> loadOneNote(int noteId){
@@ -42,11 +42,11 @@ public class NoteyViewModel extends AndroidViewModel {
         noteRepo.update_note(command);
     }
     public void addToTrash(Command command){
-        command.getNote().setFlag(2);
+        command.getNote().setFlag(3);
         noteRepo.update_note(command);
     }
     public void secure(Command command){
-        command.getNote().setFlag(3);
+        command.getNote().setFlag(2);
         noteRepo.update_note(command);
     }
 

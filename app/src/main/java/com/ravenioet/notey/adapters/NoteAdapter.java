@@ -20,16 +20,18 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteHolder> {
     private List<Note> books = new ArrayList<>();
     public OnItemClickListener listener;
     public Context context;
-    int target;
-    public NoteAdapter(Context context, int i){
+    int viewType;
+    int listType;
+    public NoteAdapter(Context context, int viewType, int listType){
         this.context = context;
-        this.target = i;
+        this.viewType = viewType;
+        this.listType = listType;
     }
     @NonNull
     @Override
     public NoteHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView;
-        if(target == 1){
+        if(this.viewType == 1){
             itemView = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.view_book_g,parent,false);
         }else {
@@ -40,13 +42,19 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteHolder> {
     }
     @Override
     public void onBindViewHolder(@NonNull NoteHolder holder, int position) {
-        Note book = books.get(position);
-        holder.bookTitle.setText(book.getTitle());
-        holder.bookDesc.setText(book.getBody());
-        if(book.getFlag() == 2){
-            //holder.cartPic.setVisibility(View.VISIBLE);
+        Note note = books.get(position);
+        holder.bookTitle.setText(note.getTitle());
+        holder.bookDesc.setText(note.getBody());
+        if(listType != 1){
+            holder.locker.setVisibility(View.GONE);
+        }
+        if (note.getFlag() == 1) {
+            holder.locker.setImageResource(R.drawable.ic_baseline_lock_open_24);
+        }
+        else if (note.getFlag() == 2) {
+            holder.locker.setImageResource(R.drawable.ic_baseline_lock_24);
         }else {
-            //holder.cartPic.setVisibility(View.GONE);
+            holder.locker.setVisibility(View.GONE);
         }
         /*RequestOptions options = new RequestOptions()
                 .placeholder(R.drawable.ic_baseline_menu_book_24)
@@ -74,13 +82,13 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteHolder> {
     }
     public class NoteHolder extends RecyclerView.ViewHolder {
         private TextView bookTitle, bookDesc;
-        private ImageView bookPic,cartPic,pubPic;
+        private ImageView bookPic, locker,pubPic;
         public NoteHolder(@NonNull View itemView) {
             super(itemView);
             bookTitle = itemView.findViewById(R.id.book_title);
             bookDesc = itemView.findViewById(R.id.book_desc);
             bookPic = itemView.findViewById(R.id.book_pic);
-            cartPic = itemView.findViewById(R.id.cart_pic);
+            locker = itemView.findViewById(R.id.lock);
             pubPic = itemView.findViewById(R.id.puber);
             itemView.setOnClickListener(v -> {
                 int position = getAdapterPosition();

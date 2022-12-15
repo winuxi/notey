@@ -1,6 +1,7 @@
 package com.ravenioet.notey.utils;
 
 import com.ravenioet.notey.interfaces.NoteListener;
+import com.ravenioet.notey.models.Command;
 import com.ravenioet.notey.models.Note;
 
 public class NoteUtils {
@@ -16,19 +17,19 @@ public class NoteUtils {
     public void setNoteListener(NoteListener noteListener){
         this.noteListener = noteListener;
     }
-    public void noteCreated(Note note){
+    public void noteCreated(Command command){
         if(noteListener != null){
-            noteListener.noteCreated(note);
+            noteListener.noteCreated(command);
         }
     }
-    public void noteUpdated(Note note){
+    public void noteUpdated(Command command){
         if(noteListener != null){
-            noteListener.noteUpdated(note);
+            noteListener.noteUpdated(command);
         }
     }
-    public void noteDeleted(Note note){
+    public void noteDeleted(Command command){
         if(noteListener != null){
-            noteListener.noteDeleted(note);
+            noteListener.noteDeleted(command);
         }
     }
 

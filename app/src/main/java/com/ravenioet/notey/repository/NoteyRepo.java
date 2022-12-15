@@ -3,7 +3,6 @@ package com.ravenioet.notey.repository;
 import android.app.Application;
 import android.os.Handler;
 import android.os.Looper;
-import android.widget.Toast;
 
 import androidx.lifecycle.LiveData;
 
@@ -11,7 +10,6 @@ import com.ravenioet.notey.database.NoteDao;
 import com.ravenioet.notey.database.NoteyDB;
 import com.ravenioet.notey.models.Command;
 import com.ravenioet.notey.models.Note;
-import com.ravenioet.notey.viewmodel.NoteyViewModel;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -46,11 +44,11 @@ public class NoteyRepo {
         return noteDao.load_all_notes();
     }
 
-    public LiveData<List<Note>> load_cart() {
-        return noteDao.load_cart();
+    public LiveData<List<Note>> load_secured() {
+        return noteDao.load_secured();
     }
-    public LiveData<List<Note>> load_shelf() {
-        return noteDao.load_shelf();
+    public LiveData<List<Note>> load_deleted() {
+        return noteDao.load_deleted();
     }
 
     public LiveData<Note> load_one_note(int noteId) {
@@ -62,9 +60,20 @@ public class NoteyRepo {
         Handler handler = new Handler(Looper.getMainLooper());
         executor.execute(() -> {
             //Background work here
-            noteDao.save_note(command.getNote());
+            int x = 0;
+            try {
+                x = noteDao.update_note(command.getNote());
+            }catch (Exception e){
+                command.getListener().error(e.toString());
+            }
+            int finalX = x;
             handler.post(() -> {
-                command.getListener().noteUpdated(command.getNote());
+                if(finalX > 0){
+                    command.setMessage(finalX +" notes updated");
+                    command.getListener().noteUpdated(command);
+                }else {
+                    command.getListener().error("Unable to update");
+                }
             });
         });
     }
@@ -76,7 +85,7 @@ public class NoteyRepo {
             //Background work here
             noteDao.save_note(command.getNote());
             handler.post(() -> {
-                command.getListener().noteCreated(command.getNote());
+                command.getListener().noteCreated(command);
             });
         });
 

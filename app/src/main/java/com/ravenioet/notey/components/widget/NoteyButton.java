@@ -1,9 +1,8 @@
-package com.ravenioet.notey.components;
+package com.ravenioet.notey.components.widget;
 
 import android.animation.Animator;
 import android.content.Context;
 import android.util.AttributeSet;
-import android.view.animation.Animation;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

@@ -20,8 +20,31 @@
     <fragment
         android:id="@+id/AddEditNote"
         android:name="com.ravenioet.notey.screens.AddOrEditNote"
-        android:label="@string/add_label"
         tools:layout="@layout/add_edit_note">
+    </fragment>
+    <fragment
+        android:id="@+id/SecuredNotes"
+        android:name="com.ravenioet.notey.screens.SecuredNotes"
+        android:label="Secured"
+        tools:layout="@layout/fragment_home">
+    </fragment>
+    <fragment
+        android:id="@+id/DeletedNotes"
+        android:name="com.ravenioet.notey.screens.DeletedNotes"
+        android:label="Trash Bin"
+        tools:layout="@layout/fragment_home">
+    </fragment>
+    <fragment
+        android:id="@+id/NavSettings"
+        android:name="com.ravenioet.notey.screens.Settings"
+        android:label="Settings"
+        tools:layout="@layout/fragment_home">
+    </fragment>
+    <fragment
+        android:id="@+id/NavSecuredInput"
+        android:name="com.ravenioet.notey.screens.SecuredInput"
+        android:label="Secured Input"
+        tools:layout="@layout/secured_input">
     </fragment>
 
 </navigation>

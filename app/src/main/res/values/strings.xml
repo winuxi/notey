@@ -6,4 +6,5 @@
     <string name="detail_label">Detail</string>
     <string name="add_label">Add</string>
     <string name="edit_label">Edit</string>
+    <string name="secured_input">Secured Input</string>
 </resources>

@@ -17,6 +17,7 @@
                 android:layout_above="@id/book_title"
                 android:id="@+id/puber"
                 android:translationZ="50dp"
+                android:visibility="gone"
                 android:src="@drawable/ic_baseline_person_pin_24"
                 android:layout_height="50dp"/>
             <ImageView
@@ -24,8 +25,8 @@
                 android:layout_margin="2dp"
                 android:layout_alignParentEnd="true"
                 android:elevation="4dp"
-                android:id="@+id/cart_pic"
-                android:src="@drawable/ic_baseline_shopping_cart_24"
+                android:id="@+id/lock"
+                android:src="@drawable/ic_baseline_lock_24"
                 android:layout_height="20dp"/>
             <ImageView
                 android:layout_width="match_parent"

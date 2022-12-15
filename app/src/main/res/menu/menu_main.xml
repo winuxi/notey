@@ -3,8 +3,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.ravenioet.notey.init.MainActivity">
     <item
+        android:id="@+id/action_secured"
+        android:orderInCategory="100"
+        android:icon="@drawable/ic_baseline_lock_24"
+        app:iconTint="@color/white"
+        android:title="Secured"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_trash"
+        android:orderInCategory="100"
+        android:title="Dust Bin"
+        android:icon="@drawable/ic_baseline_delete_24"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
         android:title="@string/action_settings"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/action_secured_input"
+        android:orderInCategory="100"
+        android:title="@string/secured_input"
+        app:showAsAction="never" />
+
+
 </menu>
