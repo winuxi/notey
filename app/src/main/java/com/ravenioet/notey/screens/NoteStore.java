@@ -17,6 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.ravenioet.notey.R;
 import com.ravenioet.notey.adapters.NoteAdapter;
 import com.ravenioet.notey.databinding.FragmentHomeBinding;
+import com.ravenioet.notey.init.MainActivity;
+import com.ravenioet.notey.utils.PrefManager;
 import com.ravenioet.notey.viewmodel.NoteyViewModel;
 
 public class NoteStore extends Fragment {
@@ -25,12 +27,14 @@ public class NoteStore extends Fragment {
     private ProgressBar progressBar;
     NoteAdapter bookAdapter;
     NoteyViewModel noteyViewModel;
+    PrefManager prefManager;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         noteyViewModel =
                 new ViewModelProvider(requireActivity()).get(NoteyViewModel.class);
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
+        prefManager = PrefManager.getPrefMan(getActivity(), "notey-pref");
         View root = binding.getRoot();
         RecyclerView news_list = root.findViewById(R.id.new_recycler);
         progressBar = root.findViewById(R.id.progress);
@@ -42,7 +46,7 @@ public class NoteStore extends Fragment {
         */
         binding.newRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
         news_list.setHasFixedSize(true);
-        bookAdapter = new NoteAdapter(getContext(), 2,2);
+        bookAdapter = new NoteAdapter(getContext(), 2,2, prefManager.getBoolean("list-anim"));
         news_list.setAdapter(bookAdapter);
 
         noteyViewModel.getAllNotes().observe(getViewLifecycleOwner(), books -> {

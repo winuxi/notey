@@ -1,11 +1,14 @@
 package com.ravenioet.notey.utils;
 
+import com.ravenioet.notey.guard.SecPack;
 import com.ravenioet.notey.interfaces.NoteListener;
+import com.ravenioet.notey.interfaces.SecureInputListener;
 import com.ravenioet.notey.models.Command;
 import com.ravenioet.notey.models.Note;
 
 public class NoteUtils {
     NoteListener noteListener;
+    SecureInputListener secureInputListener;
     static NoteUtils noteUtils;
     NoteUtils(){};
     public static NoteUtils getInstance(){
@@ -14,9 +17,13 @@ public class NoteUtils {
         }
         return noteUtils;
     }
+    public void setSecKeyListener(SecureInputListener keyListener){
+        this.secureInputListener = keyListener;
+    }
     public void setNoteListener(NoteListener noteListener){
         this.noteListener = noteListener;
     }
+
     public void noteCreated(Command command){
         if(noteListener != null){
             noteListener.noteCreated(command);
@@ -32,5 +39,22 @@ public class NoteUtils {
             noteListener.noteDeleted(command);
         }
     }
+    public void pinPassed(SecPack secPack){
+        if(secureInputListener != null){
+            secureInputListener.pinPassed(secPack);
+        }
+    }
+    public void bioSuccess(SecPack secPack){
+        if(secureInputListener != null){
+            secureInputListener.bioSuccess(secPack);
+        }
+    }
+    public void bioFailure(SecPack secPack){
+        if(secureInputListener != null){
+            secureInputListener.bioFailure(secPack);
+        }
+    }
+
+
 
 }

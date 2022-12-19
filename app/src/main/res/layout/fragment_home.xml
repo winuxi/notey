@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/teal_700"
     android:layout_height="match_parent">
 
     <ProgressBar
@@ -13,7 +14,6 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/new_recycler"
-        android:padding="3dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_width="match_parent"
@@ -37,6 +37,6 @@
         android:layout_marginEnd="@dimen/fab_margin"
         app:tint="@color/white"
         android:layout_marginBottom="16dp"
-        app:srcCompat="@drawable/ic_baseline_edit_24" />
+        app:srcCompat="@drawable/ic_baseline_add_24" />
 
 </RelativeLayout>

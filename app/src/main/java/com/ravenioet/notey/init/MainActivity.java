@@ -3,6 +3,7 @@ package com.ravenioet.notey.init;
 import static androidx.biometric.BiometricConstants.ERROR_NEGATIVE_BUTTON;
 
 import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -10,6 +11,9 @@ import com.google.android.material.snackbar.Snackbar;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatDelegate;
@@ -22,6 +26,8 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.ravenioet.notey.R;
 import com.ravenioet.notey.databinding.ActivityMainBinding;
+import com.ravenioet.notey.utils.NoteUtils;
+import com.ravenioet.notey.utils.PrefManager;
 
 import android.view.Menu;
 import android.view.MenuItem;
@@ -40,17 +46,23 @@ public class MainActivity extends ServiceProvider {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         setSupportActionBar(binding.toolbar);
-
-        if(isBioAuthEnabled()){
-            requireBioPass();
-        }else {
-            initSystem();
-        }
-
+        initNav();
     }
-    private void initSystem(){
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initSystem();
+        if(isPinCodeEnabled()){
+            requireBioPass();
+        }
+    }
+
+    private void initNav(){
         navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
+    }
+    private void initSystem(){
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
     }
 
@@ -58,6 +70,17 @@ public class MainActivity extends ServiceProvider {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+        for(int i = 0; i < menu.size(); i++){
+            MenuItem item = menu.getItem(i);
+            String title = item.getTitle().toString();
+            SpannableString s = new SpannableString(title);
+            s.setSpan(new ForegroundColorSpan(Color.parseColor("#FFFFFF")), 0, s.length(),
+                    Spannable.SPAN_INCLUSIVE_INCLUSIVE); // provide whatever color you want here.
+            item.setTitle(s);
+        }
+       // MenuItem mColorFullMenuBtn = menu.findItem(R.id.action_submit); // extract the menu item here
+
+
         return true;
     }
 
@@ -83,11 +106,6 @@ public class MainActivity extends ServiceProvider {
                     navController.navigate(R.id.NavSettings);
                 }
                 break;
-            case R.id.action_secured_input:
-                if(navController.getCurrentDestination() != navController.findDestination(R.id.NavSecuredInput)){
-                    navController.navigate(R.id.NavSecuredInput);
-                }
-                break;
 
         }
 
@@ -100,59 +118,11 @@ public class MainActivity extends ServiceProvider {
         return NavigationUI.navigateUp(navController, appBarConfiguration)
                 || super.onSupportNavigateUp();
     }
-
-    private BiometricPrompt biometricPrompt = null;
-    private Executor executor = Executors.newSingleThreadExecutor();
-
     private void requireBioPass() {
-        if (biometricPrompt == null) {
-            biometricPrompt = new BiometricPrompt(this, executor, callback);
-        }
-        BiometricManager biometricManager = BiometricManager.from(this);
-        switch (biometricManager.canAuthenticate()) {
-            case BiometricManager.BIOMETRIC_SUCCESS:
-                BiometricPrompt.PromptInfo promptInfo = buildBiometricPrompt();
-                biometricPrompt.authenticate(promptInfo);
-                break;
-            case BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE:
-                break;
-            case BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE:
-                break;
-            case BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED:
-                break;
-        }
+        Bundle bundle = new Bundle();
+        bundle.putBoolean("update", false);
+        bundle.putBoolean("enable", false);
+        navController.navigate(R.id.NavSecuredInput,bundle);
     }
-
-    private BiometricPrompt.PromptInfo buildBiometricPrompt() {
-        return new BiometricPrompt.PromptInfo.Builder()
-                .setTitle("Authentication")
-                //.setSubtitle("FingerPrint Authentication")
-                .setDescription("Please place your finger on the sensor to unlock")
-                .setNegativeButtonText("Cancel")
-                .build();
-
-    }
-
-
-    private BiometricPrompt.AuthenticationCallback callback = new
-            BiometricPrompt.AuthenticationCallback() {
-                @SuppressLint("RestrictedApi")
-                @Override
-                public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
-                    if (errorCode == ERROR_NEGATIVE_BUTTON && biometricPrompt != null)
-                        biometricPrompt.cancelAuthentication();
-                    finish();
-                }
-
-                @Override
-                public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
-                    runOnUiThread(() -> initSystem());
-                }
-
-                @Override
-                public void onAuthenticationFailed() {
-                    return;
-                }
-            };
 
 }

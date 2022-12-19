@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/purple_200"
     android:layout_height="match_parent">
 
     <RelativeLayout
@@ -17,55 +18,35 @@
                 android:layout_height="wrap_content">
                 <RelativeLayout
                     android:layout_width="match_parent"
+                    android:padding="5dp"
                     android:layout_height="wrap_content">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:id="@+id/title_nav"
-                        android:background="@color/purple_200"
                         android:layout_height="wrap_content">
                         <EditText
                             android:id="@+id/note_title"
-                            android:background="@drawable/round_back"
+                            android:background="@drawable/pincode_back"
                             android:layout_width="match_parent"
                             android:padding="5dp"
                             android:hint="Title"
-                            android:layout_margin="5dp"
+                            android:textColorHint="@color/teal_700"
+                            android:textCursorDrawable="@null"
+                            android:textColor="@color/white"
                             android:layout_height="45dp"/>
                     </LinearLayout>
-                  <!--  <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/note_title_lay"
-                        android:background="@color/purple_200"
-                        app:boxBackgroundColor="@color/white"
-                        android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        android:padding="3dp"
-                        app:boxCornerRadiusBottomEnd="5dp"
-                        app:boxCornerRadiusBottomStart="5dp"
-                        app:boxCornerRadiusTopEnd="5dp"
-                        app:boxCornerRadiusTopStart="5dp"
-                        app:boxStrokeColor="@color/purple_200"
-                        app:errorEnabled="true"
-                        android:textColorHint="@color/purple_200"
-                        app:hintTextColor="@color/purple_200"
-                        app:startIconDrawable="@drawable/ic_baseline_sticky_note_2_24">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/note_title_val"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:inputType="text"
-                            android:maxLines="1" />
-
-                    </com.google.android.material.textfield.TextInputLayout>
--->
                     <EditText
                         android:id="@+id/note_body"
+                        android:textColor="@color/white"
                         android:padding="5dp"
                         android:layout_width="match_parent"
+                        android:cursorVisible="true"
                         android:minLines="20"
+                        android:textColorHint="@color/teal_700"
                         android:hint="Write note..."
                         android:gravity="top|start"
-                        android:background="@color/white"
+                        android:textCursorDrawable="@null"
+                        android:background="@drawable/pincode_back"
                         android:layout_below="@id/title_nav"
                         android:layout_height="match_parent"/>
                 </RelativeLayout>
@@ -80,7 +61,7 @@
             android:layout_height="wrap_content">
             <ImageView
                 android:id="@+id/ic_delete"
-                android:background="@drawable/round_back"
+                android:background="@drawable/pincode_back"
                 android:padding="5dp"
                 android:layout_margin="5dp"
                 android:layout_width="wrap_content"
@@ -89,7 +70,7 @@
                 android:layout_height="40dp"/>
             <ImageView
                 android:id="@+id/ic_save"
-                android:background="@drawable/round_back"
+                android:background="@drawable/pincode_back"
                 android:padding="5dp"
                 android:layout_margin="5dp"
                 android:layout_width="wrap_content"
@@ -98,7 +79,7 @@
                 android:layout_height="40dp"/>
             <ImageView
                 android:id="@+id/ic_lock"
-                android:background="@drawable/round_back"
+                android:background="@drawable/pincode_back"
                 android:padding="5dp"
                 android:layout_margin="5dp"
                 android:layout_width="wrap_content"

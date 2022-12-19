@@ -17,13 +17,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.ravenioet.notey.R;
 import com.ravenioet.notey.adapters.NoteAdapter;
 import com.ravenioet.notey.databinding.FragmentHomeBinding;
+import com.ravenioet.notey.init.MainActivity;
+import com.ravenioet.notey.init.MainFragment;
+import com.ravenioet.notey.utils.PrefManager;
 import com.ravenioet.notey.viewmodel.NoteyViewModel;
 
-public class DeletedNotes extends Fragment {
+public class DeletedNotes extends MainFragment {
 
     private FragmentHomeBinding binding;
     private ProgressBar progressBar;
     NoteAdapter bookAdapter;
+    PrefManager prefManager;
     NoteyViewModel noteyViewModel;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -31,6 +35,7 @@ public class DeletedNotes extends Fragment {
                 new ViewModelProvider(requireActivity()).get(NoteyViewModel.class);
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
+        prefManager = PrefManager.getPrefMan(getActivity(), "notey-pref");
         View root = binding.getRoot();
         RecyclerView news_list = root.findViewById(R.id.new_recycler);
         progressBar = root.findViewById(R.id.progress);
@@ -42,7 +47,7 @@ public class DeletedNotes extends Fragment {
         */
         binding.newRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
         news_list.setHasFixedSize(true);
-        bookAdapter = new NoteAdapter(getContext(), 2,2);
+        bookAdapter = new NoteAdapter(getContext(), 2,2,prefManager.getBoolean("list-anim"));
         news_list.setAdapter(bookAdapter);
 
         noteyViewModel.getFromBin().observe(getViewLifecycleOwner(), books -> {
@@ -74,4 +79,5 @@ public class DeletedNotes extends Fragment {
         super.onDestroyView();
         binding = null;
     }
+
 }

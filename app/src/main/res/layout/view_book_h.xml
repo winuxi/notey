@@ -5,7 +5,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_margin="4dp"
+        android:layout_margin="2dp"
+        app:cardCornerRadius="5dp"
+        app:cardBackgroundColor="@color/purple_200"
         android:padding="5dp"
         android:layout_height="wrap_content">
         <RelativeLayout
@@ -22,6 +24,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:id="@+id/book_title"
+                android:textColor="@color/white_100"
                 android:text="Title"
                 android:textStyle="bold"
                 android:layout_marginTop="5dp"
@@ -34,6 +37,7 @@
                 android:layout_width="wrap_content"
                 android:text="Description"
                 android:id="@+id/book_desc"
+                android:textColor="@color/white_100"
                 android:maxLines="2"
                 android:ellipsize="end"
                 android:layout_toEndOf="@id/book_pic"

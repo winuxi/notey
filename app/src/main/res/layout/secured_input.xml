@@ -9,6 +9,27 @@
         android:layout_width="match_parent"
         android:padding="5dp"
         android:layout_marginStart="35dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="35dp"
+        android:background="@drawable/pincode_back"
+        android:id="@+id/hint_panel"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/hint_value"
+            android:layout_width="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/white"
+            android:padding="5dp"
+            android:maxLines="1"
+            android:text="Pin Code"
+            android:textSize="15sp"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:padding="5dp"
+        android:layout_marginStart="35dp"
         android:layout_marginEnd="35dp"
         android:background="@drawable/pincode_back"
         android:layout_above="@id/number_pad"
@@ -22,7 +43,7 @@
             android:textColor="@color/white"
             android:padding="5dp"
             android:maxLines="1"
-            android:maxLength="8"
+            android:maxLength="4"
             android:text="0000"
             android:textSize="35sp"
             android:layout_height="wrap_content"/>

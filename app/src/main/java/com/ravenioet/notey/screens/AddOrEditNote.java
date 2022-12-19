@@ -27,6 +27,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.ravenioet.notey.R;
 import com.ravenioet.notey.database.APIProvider;
 import com.ravenioet.notey.databinding.AddEditNoteBinding;
+import com.ravenioet.notey.init.MainFragment;
 import com.ravenioet.notey.interfaces.NoteListener;
 import com.ravenioet.notey.models.Command;
 import com.ravenioet.notey.models.Note;
@@ -48,7 +49,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class AddOrEditNote extends Fragment implements NoteListener {
+public class AddOrEditNote extends MainFragment implements NoteListener {
 
     private AddEditNoteBinding binding;
     Note note;
@@ -78,6 +79,8 @@ public class AddOrEditNote extends Fragment implements NoteListener {
             }
             else if (note.getFlag() == 3) {
                 binding.icDelete.setImageResource(R.drawable.ic_baseline_restore_from_trash_24);
+                binding.icLock.setVisibility(View.GONE);
+                binding.icSave.setVisibility(View.GONE);
             }else {
 
             }

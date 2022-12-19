@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,6 +17,7 @@ import com.ravenioet.notey.models.Note;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteHolder> {
     private List<Note> books = new ArrayList<>();
@@ -22,10 +25,12 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteHolder> {
     public Context context;
     int viewType;
     int listType;
-    public NoteAdapter(Context context, int viewType, int listType){
+    boolean animate;
+    public NoteAdapter(Context context, int viewType, int listType, boolean animate){
         this.context = context;
         this.viewType = viewType;
         this.listType = listType;
+        this.animate = animate;
     }
     @NonNull
     @Override
@@ -66,7 +71,22 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteHolder> {
                 .circleCrop();
         Glide.with(context).load(UserManager.loadIp(context)+book.getPublisher_photo()).apply(option).into(holder.pubPic);
         */
+        if(animate){
+            setAnimation(holder.itemView, position);
+        }
 
+    }
+    private int lastPosition = -1;
+
+    private void setAnimation(View viewToAnimate, int position) {
+        // If the bound view wasn't previously displayed on screen, it's animated
+        if (position > lastPosition) {
+            ScaleAnimation anim = new ScaleAnimation(0.0f, 1.0f, 0.0f, 1.0f,
+                    Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+            anim.setDuration(new Random().nextInt(501));//to make duration random number between [0,501)
+            viewToAnimate.startAnimation(anim);
+            lastPosition = position;
+        }
     }
     private static boolean isNonNullAndChecked(@Nullable String uri) {
         return uri != null;
@@ -96,6 +116,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteHolder> {
                     listener.onItemClick(books.get(position));
                 }
             });
+
         }
     }
     public interface OnItemClickListener{
