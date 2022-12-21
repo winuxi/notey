@@ -1,5 +1,6 @@
 package com.ravenioet.notey.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 import com.ravenioet.notey.R;
+import com.ravenioet.notey.components.layouts.NoteyListCard;
+import com.ravenioet.notey.components.widget.NoteyImageView;
+import com.ravenioet.notey.components.widget.NoteyTextView;
 import com.ravenioet.notey.models.Note;
 
 import java.util.ArrayList;
@@ -43,6 +47,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteHolder> {
             itemView = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.view_book_h,parent,false);
         }
+        //itemView = new NoteyListCard(context);
         return new NoteHolder(itemView);
     }
     @Override
@@ -103,6 +108,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteHolder> {
     public class NoteHolder extends RecyclerView.ViewHolder {
         private TextView bookTitle, bookDesc;
         private ImageView bookPic, locker,pubPic;
+        @SuppressLint("ResourceType")
         public NoteHolder(@NonNull View itemView) {
             super(itemView);
             bookTitle = itemView.findViewById(R.id.book_title);
@@ -110,6 +116,14 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteHolder> {
             bookPic = itemView.findViewById(R.id.book_pic);
             locker = itemView.findViewById(R.id.lock);
             pubPic = itemView.findViewById(R.id.puber);
+
+            /*bookTitle = itemView.findViewById(1).findViewById(8).findViewById(3);
+            bookDesc = itemView.findViewById(1).findViewById(8).findViewById(4);
+            bookPic = itemView.findViewById(1).findViewById(8).findViewById(2);
+            //locker = itemView.findViewById(R.id.lock);
+            //pubPic = itemView.findViewById(R.id.puber);
+
+*/
             itemView.setOnClickListener(v -> {
                 int position = getAdapterPosition();
                 if(listener != null && position != RecyclerView.NO_POSITION){

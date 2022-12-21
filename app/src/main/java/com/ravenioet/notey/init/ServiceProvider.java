@@ -11,6 +11,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.ravenioet.notey.R;
+import com.ravenioet.notey.components.theme.Themes;
 import com.ravenioet.notey.databinding.ActivityMainBinding;
 import com.ravenioet.notey.guard.SecPack;
 import com.ravenioet.notey.interfaces.SecureInputListener;
@@ -44,14 +45,21 @@ public class ServiceProvider extends AppCompatActivity implements SecureInputLis
     public boolean isBioAuthEnabled() {
         return getPrefMan().getBoolean("bio-pass");
     }
+    public boolean isVibrationEnabled() {
+        return getPrefMan().getBoolean("vibrate");
+    }
 
     public boolean isPinCodeEnabled() {
         return getPrefMan().getBoolean("pin-code");
     }
 
     public boolean isAnimationEnabled() {
-        return getPrefMan().getBoolean("pin-code");
+        return getPrefMan().getBoolean("list-anim");
     }
+    public boolean isGridEnabled() {
+        return getPrefMan().getString("view-type").equals("Grid");
+    }
+
 
     @Override
     public void pinPassed(SecPack secPack) {
@@ -88,5 +96,21 @@ public class ServiceProvider extends AppCompatActivity implements SecureInputLis
 
     private void toast(String message) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+    }
+
+    public Themes getSavedTheme(){
+        switch (getPrefMan().getString("active-theme")){
+            case "dark":
+            case "Default":
+                return Themes.dark;
+            case "blue":
+                return Themes.blue;
+            case "orange":
+                return Themes.orange;
+        }
+        return Themes.blue;
+    }
+    public boolean setActiveTheme(String theme){
+        return getPrefMan().putString("active-theme",theme);
     }
 }

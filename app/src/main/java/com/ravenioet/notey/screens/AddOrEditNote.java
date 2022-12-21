@@ -27,6 +27,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.ravenioet.notey.R;
 import com.ravenioet.notey.database.APIProvider;
 import com.ravenioet.notey.databinding.AddEditNoteBinding;
+import com.ravenioet.notey.init.ChildFragment;
 import com.ravenioet.notey.init.MainFragment;
 import com.ravenioet.notey.interfaces.NoteListener;
 import com.ravenioet.notey.models.Command;
@@ -49,7 +50,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class AddOrEditNote extends MainFragment implements NoteListener {
+public class AddOrEditNote extends ChildFragment implements NoteListener {
 
     private AddEditNoteBinding binding;
     Note note;

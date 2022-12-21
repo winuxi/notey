@@ -13,7 +13,7 @@
         android:layout_marginEnd="35dp"
         android:background="@drawable/pincode_back"
         android:id="@+id/hint_panel"
-        android:layout_height="wrap_content">
+        android:layout_height="50dp">
         <TextView
             android:id="@+id/hint_value"
             android:layout_width="wrap_content"
@@ -45,7 +45,7 @@
             android:maxLines="1"
             android:maxLength="4"
             android:text="0000"
-            android:textSize="35sp"
+            android:textSize="30sp"
             android:layout_height="wrap_content"/>
     </RelativeLayout>
     <RelativeLayout

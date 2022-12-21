@@ -122,6 +122,7 @@ public class MainActivity extends ServiceProvider {
         Bundle bundle = new Bundle();
         bundle.putBoolean("update", false);
         bundle.putBoolean("enable", false);
+        bundle.putBoolean("reset", false);
         navController.navigate(R.id.NavSecuredInput,bundle);
     }
 

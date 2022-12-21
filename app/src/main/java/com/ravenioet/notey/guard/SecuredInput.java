@@ -69,24 +69,42 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 
-public class SecuredInput extends Fragment {
+public class SecuredInput extends MainFragment {
 
     private SecuredInputBinding binding;
     private TextView one, two, three, four, five, six, seven, eight, nine, keyValue, zero;
     private ImageView finger, clear;
     private RelativeLayout topPanel;
-    boolean enable = false, update = false;
+    boolean enable = false, update = false, preFound = false, reset = false;
+    String prePin = "1234";
     SecPack secPack;
+
+    public void initPreKey() {
+        prePin = getPrefMan().getString("pre-pin");
+        if (prePin.equals("Default")) {
+            binding.hintValue.setText("Input Pin");
+            prePin = "1234";
+        } else {
+            binding.hintValue.setText("Input Pin");
+            preFound = true;
+        }
+    }
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         binding = SecuredInputBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+        initPreKey();
         if (getArguments() != null) {
             update = getArguments().getBoolean("update");
             enable = getArguments().getBoolean("enable");
+            reset = getArguments().getBoolean("reset");
+            if(reset){
+                binding.hintValue.setText("Input old Pin");
+            }
             secPack = new SecPack(update);
             secPack.setState(enable);
-        }else {
+        } else {
             secPack = new SecPack(false);
             secPack.setState(enable);
             secPack.setMessage("Something went wrong");
@@ -95,34 +113,36 @@ public class SecuredInput extends Fragment {
         }
 
         initKeys();
-        return root;
-    }
-
-    private void toast(String message){
-        Toast.makeText(getContext(),message,Toast.LENGTH_LONG).show();
-    }
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        view.setFocusableInTouchMode(true);
-        view.requestFocus();
-
-        view.setOnKeyListener((v, keyCode, event) -> {
+        binding.getRoot().setOnKeyListener((v, keyCode, event) -> {
             if (event.getAction() == KeyEvent.ACTION_DOWN) {
                 if (keyCode == KeyEvent.KEYCODE_BACK) {
-                    if(secPack.isForUpdate()){
-                        //toast("For Update");
-                        getActivity().getFragmentManager().popBackStack();
+                    if (secPack.isForUpdate()) {
+                        toast("For Update");
+                        getRootActivity().onSupportNavigateUp();
                         //Navigation.findNavController(binding.getRoot()).navigateUp();
-                    }else {
+                    } else {
                         //toast("For Auth");
-                        getActivity().finish();
+                        getRootActivity().finish();
                     }
                     return true;
                 }
             }
             return false;
         });
+        return root;
+    }
+
+    private void toast(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        view.setFocusableInTouchMode(true);
+        view.requestFocus();
+
+
     }
 
     private void initKeys() {
@@ -142,114 +162,157 @@ public class SecuredInput extends Fragment {
         clear = binding.clear;
         topPanel = binding.topPanel;
         initListener();
-        if(getActivity() != null &&
-                ((MainActivity)getActivity()).isBioAuthEnabled()){
+        if (getRootActivity().isBioAuthEnabled()) {
             initFinger(secPack);
-        }else {
-            toast("Bio Disabled");
+        } else {
+            toast("Fingerprint Disabled");
+        }
+    }
+
+    private String tempStore = "";
+    private boolean firstKey = false;
+    private void createPinCode(String pin) {
+        if (!firstKey) {
+            tempStore = pin;
+            firstKey = true;
+            binding.hintValue.setText("Verify Pin");
+            keyValue.setText("");
+        } else {
+            firstKey = false;
+            if (tempStore.equals(pin)) {
+                reset = false;
+                getPrefMan().putString("pre-pin", pin);
+                SecPack secPack = new SecPack(update);
+                secPack.setState(enable);
+                NoteUtils.getInstance().pinPassed(secPack);
+                //getRootActivity().onBackPressed();
+                Navigation.findNavController(binding.getRoot()).navigateUp();
+            } else {
+                binding.hintValue.setText("Pin Dose not match!");
+                shakeView();
+            }
+        }
+    }
+
+    private void authPinCode(String keys) {
+        if (keys.equals(prePin)) {
+            if(reset){
+                preFound = false;
+                binding.hintValue.setText("Input new Pin");
+                firstKey = false;
+                binding.keyValue.setText("");
+            }else {
+                SecPack secPack = new SecPack(update);
+                secPack.setState(enable);
+                NoteUtils.getInstance().pinPassed(secPack);
+                Navigation.findNavController(binding.getRoot()).navigateUp();
+            }
+        } else {
+            shakeView();
         }
     }
 
     private void keyWatcher(String keys) {
-        if (keys.equals("2580")) {
-            SecPack secPack = new SecPack(update);
-            secPack.setState(enable);
-            NoteUtils.getInstance().pinPassed(secPack);
-            Navigation.findNavController(binding.getRoot()).navigateUp();
-        }else {
-            shakeView();
-            new Timer().schedule(
-                    new TimerTask() {
-                        @Override
-                        public void run() {
-                            getActivity().runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    keyValue.setText("");
-                                }
-                            });
-                        }
-                    },
-                    1000
-            );
+        if (!preFound) {
+            createPinCode(keys);
+        } else {
+            authPinCode(keys);
         }
     }
-    private void shakeView(){
-        final Animation animShake = AnimationUtils.loadAnimation(getContext(), R.anim.shake);
-        topPanel.startAnimation(animShake);
-        Vibrator v = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
-        if (v.hasVibrator()) {
-            //toast("YES");
-        } else {
-            //toast("NO");
-        }
+
+    private boolean canVibrate() {
+        return getRootActivity().isVibrationEnabled();
+    }
+
+    private void vibrate() {
+        Vibrator v = (Vibrator) getRootActivity().getSystemService(Context.VIBRATOR_SERVICE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             v.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
         } else {
-            //deprecated in API 26
             v.vibrate(500);
         }
+
     }
+
+    private void shakeView() {
+        if (canVibrate()) {
+            vibrate();
+        } else {
+            //toast("Cat vibrate");
+        }
+        final Animation animShake = AnimationUtils.loadAnimation(getContext(), R.anim.shake);
+        topPanel.startAnimation(animShake);
+        new Timer().schedule(
+                new TimerTask() {
+                    @Override
+                    public void run() {
+                        getRootActivity().runOnUiThread(() -> keyValue.setText(""));
+                    }
+                },
+                1000
+        );
+    }
+
     private void initListener() {
         one.setOnClickListener(view -> {
             String prevValue = keyValue.getText().toString();
             String newValue = prevValue + "1";
             keyValue.setText(newValue);
-            if(newValue.length() == 4) keyWatcher(newValue);
+            if (newValue.length() == 4) keyWatcher(newValue);
         });
         two.setOnClickListener(view -> {
             String prevValue = keyValue.getText().toString();
             String newValue = prevValue + "2";
             keyValue.setText(newValue);
-            if(newValue.length() == 4) keyWatcher(newValue);
+            if (newValue.length() == 4) keyWatcher(newValue);
         });
         three.setOnClickListener(view -> {
             String prevValue = keyValue.getText().toString();
             String newValue = prevValue + "3";
             keyValue.setText(newValue);
-            if(newValue.length() == 4) keyWatcher(newValue);
+            if (newValue.length() == 4) keyWatcher(newValue);
         });
         four.setOnClickListener(view -> {
             String prevValue = keyValue.getText().toString();
             String newValue = prevValue + "4";
             keyValue.setText(newValue);
-            if(newValue.length() == 4) keyWatcher(newValue);
+            if (newValue.length() == 4) keyWatcher(newValue);
         });
         five.setOnClickListener(view -> {
             String prevValue = keyValue.getText().toString();
             String newValue = prevValue + "5";
             keyValue.setText(newValue);
-            if(newValue.length() == 4) keyWatcher(newValue);
+            if (newValue.length() == 4) keyWatcher(newValue);
         });
         six.setOnClickListener(view -> {
             String prevValue = keyValue.getText().toString();
             String newValue = prevValue + "6";
             keyValue.setText(newValue);
-            if(newValue.length() == 4) keyWatcher(newValue);
+            if (newValue.length() == 4) keyWatcher(newValue);
         });
         seven.setOnClickListener(view -> {
             String prevValue = keyValue.getText().toString();
             String newValue = prevValue + "7";
             keyValue.setText(newValue);
-            if(newValue.length() == 4) keyWatcher(newValue);
+            if (newValue.length() == 4) keyWatcher(newValue);
         });
         eight.setOnClickListener(view -> {
             String prevValue = keyValue.getText().toString();
             String newValue = prevValue + "8";
             keyValue.setText(newValue);
-            if(newValue.length() == 4) keyWatcher(newValue);
+            if (newValue.length() == 4) keyWatcher(newValue);
         });
         nine.setOnClickListener(view -> {
             String prevValue = keyValue.getText().toString();
             String newValue = prevValue + "9";
             keyValue.setText(newValue);
-            if(newValue.length() == 4) keyWatcher(newValue);
+            if (newValue.length() == 4) keyWatcher(newValue);
         });
         finger.setOnClickListener(view -> {
-            if(getActivity() != null &&
-                    ((MainActivity)getActivity()).isBioAuthEnabled()){
-                toast("Please put your finger on sensor");
-            }else {
+            if (getActivity() != null &&
+                    ((MainActivity) getActivity()).isBioAuthEnabled()) {
+                toast("Put your finger on sensor");
+            } else {
                 toast("This feature is disabled!");
             }
         });
@@ -257,7 +320,7 @@ public class SecuredInput extends Fragment {
             String prevValue = keyValue.getText().toString();
             String newValue = prevValue + "0";
             keyValue.setText(newValue);
-            if(newValue.length() == 4) keyWatcher(newValue);
+            if (newValue.length() == 4) keyWatcher(newValue);
         });
         clear.setOnClickListener(view -> {
             String prevValue = keyValue.getText().toString();
@@ -289,13 +352,13 @@ public class SecuredInput extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
+        getRootActivity().getSupportActionBar().hide();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        ((AppCompatActivity) getActivity()).getSupportActionBar().show();
+        getRootActivity().getSupportActionBar().show();
     }
 
     private KeyStore keyStore;
@@ -311,7 +374,7 @@ public class SecuredInput extends Fragment {
         FingerprintManager fingerprintManager = null;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
             fingerprintManager = (FingerprintManager) getActivity().getSystemService(FINGERPRINT_SERVICE);
-        }else {
+        } else {
             return;
         }
 
@@ -337,7 +400,7 @@ public class SecuredInput extends Fragment {
                         if (cipherInit()) {
                             FingerprintManager.CryptoObject cryptoObject = new FingerprintManager.CryptoObject(cipher);
                             FingerHandler helper = new FingerHandler(getContext());
-                            helper.startAuth(fingerprintManager, cryptoObject,secPack,binding);
+                            helper.startAuth(fingerprintManager, cryptoObject, secPack, binding);
                         }
                     }
                 }

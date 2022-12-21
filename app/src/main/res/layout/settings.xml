@@ -2,178 +2,275 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/purple_200"
-    android:padding="10dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:id="@+id/top_panel"
-        android:background="@color/purple_200"
-        android:layout_height="150dp">
-
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_below="@id/top_panel"
-        android:id="@+id/ui_settings"
-        android:layout_width="match_parent"
+        android:scrollbars="none"
         android:layout_height="wrap_content">
-        <TextView
-            android:layout_width="wrap_content"
-            android:text="UI Settings"
-            android:id="@+id/ui_title"
-            android:layout_margin="5dp"
-            android:textColor="@color/white_100"
-            android:layout_height="wrap_content"/>
-        <androidx.cardview.widget.CardView
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_below="@id/ui_title"
-            app:cardBackgroundColor="@color/teal_200"
-            android:id="@+id/home_page"
-            app:cardCornerRadius="7dp"
-            android:layout_margin="5dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
             android:layout_height="wrap_content">
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:padding="5dp"
-                    android:text="Home page"
-                    android:layout_centerVertical="true"
-                    android:layout_height="wrap_content"/>
-                <Spinner
-                    android:id="@+id/list_type"
-                    android:layout_alignParentEnd="true"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:spinnerMode="dropdown"/>
-            </RelativeLayout>
-        </androidx.cardview.widget.CardView>
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            app:cardBackgroundColor="@color/teal_200"
-            android:layout_margin="5dp"
-            app:cardCornerRadius="7dp"
-            android:layout_below="@id/home_page"
-            android:id="@+id/ui_setup"
-            android:layout_height="wrap_content">
+                android:id="@+id/top_panel"
+                android:orientation="vertical"
+                android:background="@color/purple_200"
+                android:layout_height="wrap_content">
 
+            </LinearLayout>
             <RelativeLayout
+                android:layout_below="@id/top_panel"
+                android:id="@+id/ui_settings"
                 android:layout_width="match_parent"
-                android:layout_height="50dp">
+                android:layout_height="wrap_content">
                 <TextView
                     android:layout_width="wrap_content"
-                    android:padding="5dp"
-                    android:text="Note view"
-                    android:layout_centerVertical="true"
+                    android:text="UI Settings"
+                    android:id="@+id/ui_title"
+                    android:layout_margin="3dp"
+                    android:textColor="@color/white_100"
                     android:layout_height="wrap_content"/>
-                <Spinner
-                    android:id="@+id/view_type"
-                    android:layout_alignParentEnd="true"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:spinnerMode="dropdown"/>
-                <!--<TextView
-                    android:layout_width="wrap_content"
-                    android:padding="5dp"
-                    android:id="@+id/view_type"
-                    android:layout_centerVertical="true"
-                    android:text="List"
-                    android:layout_alignParentEnd="true"
-                    android:layout_height="wrap_content"/>
-                -->
-            </RelativeLayout>
-        </androidx.cardview.widget.CardView>
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            app:cardBackgroundColor="@color/teal_200"
-            android:layout_margin="5dp"
-            app:cardCornerRadius="7dp"
-            android:layout_below="@id/ui_setup"
-            android:id="@+id/ui_animate"
-            android:layout_height="wrap_content">
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_below="@id/ui_title"
+                    app:cardBackgroundColor="@color/teal_200"
+                    android:id="@+id/home_page"
+                    app:cardCornerRadius="7dp"
+                    android:layout_margin="3dp"
+                    android:layout_height="wrap_content">
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:padding="5dp"
+                            android:text="Home page"
+                            android:layout_centerVertical="true"
+                            android:layout_height="wrap_content"/>
+                        <Spinner
+                            android:id="@+id/list_type"
+                            android:layout_alignParentEnd="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:spinnerMode="dropdown"/>
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    app:cardBackgroundColor="@color/teal_200"
+                    android:layout_margin="3dp"
+                    app:cardCornerRadius="7dp"
+                    android:layout_below="@id/home_page"
+                    android:id="@+id/ui_setup"
+                    android:layout_height="wrap_content">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:padding="5dp"
-                    android:text="List Animation"
-                    android:layout_centerVertical="true"
-                    android:layout_height="wrap_content"/>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:padding="5dp"
+                            android:text="Note view"
+                            android:layout_centerVertical="true"
+                            android:layout_height="wrap_content"/>
+                        <Spinner
+                            android:id="@+id/view_type"
+                            android:layout_alignParentEnd="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:spinnerMode="dropdown"/>
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    app:cardBackgroundColor="@color/teal_200"
+                    android:layout_margin="3dp"
+                    app:cardCornerRadius="7dp"
+                    android:layout_below="@id/ui_setup"
+                    android:id="@+id/ui_animate"
+                    android:layout_height="wrap_content">
 
-                <androidx.appcompat.widget.SwitchCompat
-                    android:layout_width="wrap_content"
-                    android:id="@+id/list_anim"
-                    android:layout_alignParentEnd="true"
-                    android:layout_height="wrap_content"/>
-                -->
-            </RelativeLayout>
-        </androidx.cardview.widget.CardView>
-    </RelativeLayout>
-    <RelativeLayout
-        android:id="@+id/security_settings"
-        android:layout_below="@id/ui_settings"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:layout_width="wrap_content"
-            android:text="Security"
-            android:id="@+id/sec_title"
-            android:layout_margin="5dp"
-            android:textColor="@color/white_100"
-            android:layout_height="wrap_content"/>
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_below="@id/sec_title"
-            app:cardBackgroundColor="@color/teal_200"
-            app:cardCornerRadius="7dp"
-            android:layout_margin="5dp"
-            android:id="@+id/biometric"
-            android:layout_height="wrap_content">
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:padding="5dp"
-                    android:text="Biometric Protection"
-                    android:layout_centerVertical="true"
-                    android:layout_height="wrap_content"/>
-                <androidx.appcompat.widget.SwitchCompat
-                    android:layout_width="wrap_content"
-                    android:id="@+id/bio_pass"
-                    android:layout_alignParentEnd="true"
-                    android:layout_height="wrap_content"/>
-            </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:padding="5dp"
+                            android:text="List Animation"
+                            android:layout_centerVertical="true"
+                            android:layout_height="wrap_content"/>
 
-        </androidx.cardview.widget.CardView>
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            app:cardBackgroundColor="@color/teal_200"
-            android:id="@+id/pin_locker"
-            android:layout_below="@id/biometric"
-            android:layout_margin="5dp"
-            app:cardCornerRadius="7dp"
-            android:layout_height="wrap_content">
+                        <androidx.appcompat.widget.SwitchCompat
+                            android:layout_width="wrap_content"
+                            android:id="@+id/list_anim"
+                            android:layout_alignParentEnd="true"
+                            android:layout_height="wrap_content"/>
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    app:cardBackgroundColor="@color/teal_200"
+                    android:layout_margin="3dp"
+                    app:cardCornerRadius="7dp"
+                    android:layout_below="@id/ui_animate"
+                    android:id="@+id/ui_vibrate"
+                    android:layout_height="wrap_content">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:padding="5dp"
+                            android:text="Vibration"
+                            android:layout_centerVertical="true"
+                            android:layout_height="wrap_content"/>
+
+                        <androidx.appcompat.widget.SwitchCompat
+                            android:layout_width="wrap_content"
+                            android:id="@+id/vibrate"
+                            android:layout_alignParentEnd="true"
+                            android:layout_height="wrap_content"/>
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
+
+            </RelativeLayout>
             <RelativeLayout
+                android:id="@+id/security_settings"
+                android:layout_below="@id/ui_settings"
                 android:layout_width="match_parent"
-                android:layout_height="50dp">
+                android:layout_height="wrap_content">
                 <TextView
                     android:layout_width="wrap_content"
-                    android:padding="5dp"
-                    android:text="Lock With pin"
-                    android:layout_centerVertical="true"
+                    android:text="Security"
+                    android:id="@+id/sec_title"
+                    android:layout_margin="3dp"
+                    android:textColor="@color/white_100"
                     android:layout_height="wrap_content"/>
-                <androidx.appcompat.widget.SwitchCompat
-                    android:id="@+id/pin_lock"
-                    android:layout_width="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_height="wrap_content"/>
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_below="@id/sec_title"
+                    app:cardBackgroundColor="@color/teal_200"
+                    app:cardCornerRadius="7dp"
+                    android:layout_margin="3dp"
+                    android:id="@+id/biometric"
+                    android:layout_height="wrap_content">
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:padding="5dp"
+                            android:text="Biometric Protection"
+                            android:layout_centerVertical="true"
+                            android:layout_height="wrap_content"/>
+                        <androidx.appcompat.widget.SwitchCompat
+                            android:layout_width="wrap_content"
+                            android:id="@+id/bio_pass"
+                            android:layout_alignParentEnd="true"
+                            android:layout_height="wrap_content"/>
+                    </RelativeLayout>
+
+                </androidx.cardview.widget.CardView>
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    app:cardBackgroundColor="@color/teal_200"
+                    android:id="@+id/pin_locker"
+                    android:layout_below="@id/biometric"
+                    android:layout_margin="3dp"
+                    app:cardCornerRadius="7dp"
+                    android:layout_height="wrap_content">
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:padding="5dp"
+                            android:text="Lock With pin"
+                            android:layout_centerVertical="true"
+                            android:layout_height="wrap_content"/>
+                        <androidx.appcompat.widget.SwitchCompat
+                            android:id="@+id/pin_lock"
+                            android:layout_width="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_height="wrap_content"/>
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    app:cardBackgroundColor="@color/teal_200"
+                    android:id="@+id/pin_reset"
+                    android:layout_below="@id/pin_locker"
+                    android:layout_margin="3dp"
+                    app:cardCornerRadius="7dp"
+                    android:layout_height="50dp">
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:padding="5dp"
+                            android:layout_centerVertical="true"
+                            android:text="Reset Pin"
+                            android:layout_height="wrap_content"/>
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    app:cardBackgroundColor="@color/teal_200"
+                    android:id="@+id/theme"
+                    android:layout_below="@id/pin_reset"
+                    android:layout_margin="3dp"
+                    app:cardCornerRadius="7dp"
+                    android:layout_height="50dp">
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:padding="5dp"
+                            android:layout_centerVertical="true"
+                            android:text="Theme"
+                            android:layout_height="wrap_content"/>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_margin="3dp"
+                            android:orientation="horizontal"
+                            android:layout_height="wrap_content">
+                            <LinearLayout
+                                android:layout_weight="1"
+                                android:orientation="vertical"
+                                android:layout_margin="3dp"
+                                android:id="@+id/dark"
+                                android:background="@color/purple_200"
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"/>
+                            <LinearLayout
+                                android:layout_weight="1"
+                                android:background="@color/blue"
+                                android:orientation="vertical"
+                                android:layout_margin="3dp"
+                                android:id="@+id/blue"
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"/>
+                            <LinearLayout
+                                android:layout_weight="1"
+                                android:background="@color/orange"
+                                android:orientation="vertical"
+                                android:layout_margin="3dp"
+                                android:id="@+id/orange"
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"/>
+
+                        </LinearLayout>
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
             </RelativeLayout>
-        </androidx.cardview.widget.CardView>
-    </RelativeLayout>
+        </RelativeLayout>
+    </ScrollView>
 </RelativeLayout>

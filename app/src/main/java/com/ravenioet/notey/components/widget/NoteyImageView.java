@@ -8,9 +8,9 @@ import androidx.appcompat.widget.AppCompatImageView;
 
 import com.ravenioet.notey.interfaces.AnimationListener;
 
-public class NoteyImage extends AppCompatImageView {
+public class NoteyImageView extends AppCompatImageView {
     private boolean pulsing;
-    public NoteyImage(@NonNull Context context) {
+    public NoteyImageView(@NonNull Context context) {
         super(context);
     }
     public void startPulse(long periodMillis) {
@@ -33,7 +33,7 @@ public class NoteyImage extends AppCompatImageView {
                 animate().scaleX(1.0f).scaleY(1.0f).setDuration(150).setListener(new AnimationListener() {
                     @Override
                     public void onAnimationEnd(Animator animation) {
-                        NoteyImage.this.postDelayed(() -> pulse(periodMillis), periodMillis);
+                        NoteyImageView.this.postDelayed(() -> pulse(periodMillis), periodMillis);
                     }
                 }).start();
             }

@@ -2,6 +2,8 @@ package com.ravenioet.notey.init;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -11,7 +13,7 @@ import androidx.fragment.app.Fragment;
 
 import com.ravenioet.notey.utils.PrefManager;
 
-public class MainFragment extends Fragment {
+public class ChildFragment extends MainFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -19,19 +21,14 @@ public class MainFragment extends Fragment {
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
-    public MainActivity getRootActivity() {
-        return (MainActivity) getActivity();
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
-
-    public boolean isAnimationEnabled() {
-        return getRootActivity().isAnimationEnabled();
-    }
-
-    public boolean isGridEnabled() {
-        return getRootActivity().isGridEnabled();
-    }
-
-    public PrefManager getPrefMan() {
-        return getRootActivity().getPrefMan();
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        menu.clear();
     }
 }

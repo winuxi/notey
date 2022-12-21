@@ -11,18 +11,20 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ravenioet.notey.R;
 import com.ravenioet.notey.adapters.NoteAdapter;
 import com.ravenioet.notey.databinding.FragmentHomeBinding;
+import com.ravenioet.notey.init.ChildFragment;
 import com.ravenioet.notey.init.MainActivity;
 import com.ravenioet.notey.init.MainFragment;
 import com.ravenioet.notey.utils.PrefManager;
 import com.ravenioet.notey.viewmodel.NoteyViewModel;
 
-public class DeletedNotes extends MainFragment {
+public class DeletedNotes extends ChildFragment {
 
     private FragmentHomeBinding binding;
     private ProgressBar progressBar;
@@ -41,13 +43,15 @@ public class DeletedNotes extends MainFragment {
         progressBar = root.findViewById(R.id.progress);
         TextView no_books = root.findViewById(R.id.no_recent_books);
 
-        /*binding.newRecycler.setLayoutManager(new GridLayoutManager(
-                getContext(), 2
-        ));
-        */
-        binding.newRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
+        if (isGridEnabled()) {
+            binding.newRecycler.setLayoutManager(new GridLayoutManager(
+                    getContext(), 2
+            ));
+        } else {
+            binding.newRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
+        }
         news_list.setHasFixedSize(true);
-        bookAdapter = new NoteAdapter(getContext(), 2,2,prefManager.getBoolean("list-anim"));
+        bookAdapter = new NoteAdapter(getContext(), 2,2,isAnimationEnabled());
         news_list.setAdapter(bookAdapter);
 
         noteyViewModel.getFromBin().observe(getViewLifecycleOwner(), books -> {
