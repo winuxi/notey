@@ -41,7 +41,7 @@ public class NoteyListCard extends CardView {
         super(context);
         layout_216 = getParams(1,0);
         layout_216.setMargins(5,5,5,5);
-        //setPadding(5,5,5,5);
+        setPadding(5,5,5,5);
         setLayoutParams(layout_216);
         setCardBackgroundColor(ThemeProvider.getMainTheme().getPrimaryLight());
         setRadius(15);
@@ -55,7 +55,7 @@ public class NoteyListCard extends CardView {
     NoteyImageView image(Context context){
         noteyImage = new NoteyImageView(context);
         imageParams = getParams(100,100);
-        imageParams.setMargins(5,5,5,5);
+        //imageParams.setMargins(5,5,5,5);
         noteyImage.setId(2);
         noteyImage.setLayoutParams(imageParams);
         return noteyImage;
@@ -69,7 +69,7 @@ public class NoteyListCard extends CardView {
         }
         titleView.setMaxLines(1);
         titleView.setEllipsize(TextUtils.TruncateAt.END);
-        titleParams.setMargins(3,15,3,3);
+        titleParams.setMargins(3,10,3,3);
         titleView.setLayoutParams(titleParams);
         return titleView;
     }

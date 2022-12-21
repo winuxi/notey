@@ -99,7 +99,7 @@ public class Settings extends MainFragment {
         //User user = UserManager.loadUser(getContext());
         new ThemeColors(getContext());
         binding = SettingsBinding.inflate(inflater, container, false);
-        //binding.getRoot().setBackgroundColor(ThemeProvider.getMainTheme().getPrimaryDark());
+        binding.getRoot().setBackgroundColor(ThemeProvider.getMainTheme().getPrimaryDark());
         RelativeLayout root = binding.getRoot();
         initThemeTest();
         MenuItem menuItem = new MenuItem(getRootActivity());
