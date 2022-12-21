@@ -15,4 +15,23 @@
         <item name="android:navigationBarColor">@color/purple_500</item>
         <item name="actionMenuTextColor">@color/white</item>
     </style>
+
+    <style name="dark">
+        <item name="colorPrimary">#424242</item>
+        <item name="colorPrimaryDark">#616161</item>
+        <item name="colorAccent">#757575</item>
+    </style>
+
+    <style name="blue">
+        <item name="colorPrimary">#0073ff</item>
+        <item name="colorPrimaryDark">#4dcaff</item>
+        <item name="colorAccent">#9ae1ff</item>
+    </style>
+
+    <style name="orange">
+        <item name="colorPrimary">#ff8c00</item>
+        <item name="colorPrimaryDark">#ff824d</item>
+        <item name="colorAccent">#ffb89a</item>
+    </style>
+
 </resources>

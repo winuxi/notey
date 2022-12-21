@@ -14,6 +14,9 @@
         <!-- Customize your theme here. -->
         <item name="android:navigationBarColor">@color/purple_500</item>
         <item name="android:actionMenuTextColor">@color/white</item>
+        <item name="android:windowAnimationStyle">
+            @style/WindowAnimationTransition
+        </item>
     </style>
 
     <style name="Theme.Notey.NoActionBar">
@@ -24,4 +27,13 @@
     <style name="Theme.Notey.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.Notey.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="WindowAnimationTransition">
+        <item name="android:windowEnterAnimation">
+            @android:anim/fade_in
+        </item>
+        <item name="android:windowExitAnimation">
+            @android:anim/fade_out
+        </item>
+    </style>
 </resources>

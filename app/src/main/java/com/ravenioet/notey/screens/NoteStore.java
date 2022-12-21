@@ -8,7 +8,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -18,9 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.ravenioet.notey.R;
 import com.ravenioet.notey.adapters.NoteAdapter;
 import com.ravenioet.notey.databinding.FragmentHomeBinding;
-import com.ravenioet.notey.init.MainActivity;
 import com.ravenioet.notey.init.MainFragment;
-import com.ravenioet.notey.utils.PrefManager;
 import com.ravenioet.notey.viewmodel.NoteyViewModel;
 
 public class NoteStore extends MainFragment {
@@ -29,7 +26,6 @@ public class NoteStore extends MainFragment {
     private ProgressBar progressBar;
     NoteAdapter bookAdapter;
     NoteyViewModel noteyViewModel;
-    PrefManager prefManager;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {

@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.ravenioet.notey.utils.PrefManager;
+import com.ravenioet.core.manager.PrefManager;
 
 public class MainFragment extends Fragment {
     @Nullable

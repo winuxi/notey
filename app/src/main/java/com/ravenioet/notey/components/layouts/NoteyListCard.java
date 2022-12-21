@@ -41,7 +41,7 @@ public class NoteyListCard extends CardView {
         super(context);
         layout_216 = getParams(1,0);
         layout_216.setMargins(5,5,5,5);
-        setPadding(5,5,5,5);
+        //setPadding(5,5,5,5);
         setLayoutParams(layout_216);
         setCardBackgroundColor(ThemeProvider.getMainTheme().getPrimaryLight());
         setRadius(15);
@@ -77,7 +77,7 @@ public class NoteyListCard extends CardView {
         bodyView = new NoteyTextView(context);
         titleView.setId(4);
         bodyParams = getParams(0,0);
-        bodyParams.setMargins(3,0,3,3);
+        //bodyParams.setMargins(3,0,3,3);
         if(titleView != null){
             bodyParams.addRule(RelativeLayout.BELOW,titleView.getId());
             bodyParams.addRule(RelativeLayout.END_OF,noteyImage.getId());

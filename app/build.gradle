@@ -32,6 +32,7 @@ android {
 }
 
 dependencies {
+    implementation files('libs/core-release-0.6.aar')
     def room_version = "2.4.3"
     implementation 'androidx.appcompat:appcompat:1.5.1'
     implementation 'com.google.android.material:material:1.7.0'

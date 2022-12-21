@@ -1,34 +1,32 @@
 package com.ravenioet.notey.init;
 
-import android.app.Application;
 import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 
-import com.ravenioet.notey.R;
+import com.ravenioet.core.manager.PrefManager;
+import com.ravenioet.notey.components.theme.ThemeColors;
 import com.ravenioet.notey.components.theme.Themes;
-import com.ravenioet.notey.databinding.ActivityMainBinding;
 import com.ravenioet.notey.guard.SecPack;
 import com.ravenioet.notey.interfaces.SecureInputListener;
 import com.ravenioet.notey.utils.NoteUtils;
-import com.ravenioet.notey.utils.PrefManager;
 
 public class ServiceProvider extends AppCompatActivity implements SecureInputListener {
     PrefManager prefManager;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        AppCompatDelegate.setDefaultNightMode
-                (AppCompatDelegate.MODE_NIGHT_YES);
         super.onCreate(savedInstanceState);
+        initTheme();
         initDependency();
         NoteUtils.getInstance().setSecKeyListener(this);
 
+    }
+    private void initTheme(){
+        AppCompatDelegate.setDefaultNightMode
+                (AppCompatDelegate.MODE_NIGHT_YES);
+        //new ThemeColors(this);
     }
 
     private void initDependency() {

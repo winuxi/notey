@@ -1,39 +1,23 @@
 package com.ravenioet.notey.init;
 
-import static androidx.biometric.BiometricConstants.ERROR_NEGATIVE_BUTTON;
-
-import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
-
-import com.google.android.material.snackbar.Snackbar;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
-import android.view.View;
 
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.biometric.BiometricManager;
-import androidx.biometric.BiometricPrompt;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.ravenioet.notey.R;
+import com.ravenioet.notey.components.theme.ThemeColors;
 import com.ravenioet.notey.databinding.ActivityMainBinding;
-import com.ravenioet.notey.utils.NoteUtils;
-import com.ravenioet.notey.utils.PrefManager;
 
 import android.view.Menu;
 import android.view.MenuItem;
-
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 
 public class MainActivity extends ServiceProvider {
 

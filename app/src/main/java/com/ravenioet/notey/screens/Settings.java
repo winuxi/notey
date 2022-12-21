@@ -21,10 +21,13 @@ import com.ravenioet.notey.components.menus.MenuItem;
 import com.ravenioet.notey.components.layouts.NoteyRelativeLayout;
 import com.ravenioet.notey.components.provider.ThemeProvider;
 import com.ravenioet.notey.components.theme.NoteyTheme;
+import com.ravenioet.notey.components.theme.ThemeColors;
 import com.ravenioet.notey.components.theme.Themes;
 import com.ravenioet.notey.components.widget.NoteyTextView;
 import com.ravenioet.notey.databinding.SettingsBinding;
 import com.ravenioet.notey.init.MainFragment;
+
+import java.util.Random;
 
 public class Settings extends MainFragment {
 
@@ -65,31 +68,38 @@ public class Settings extends MainFragment {
                 " One thing I have noticed is I can (sometimes) get it to work using a selector but that shouldn't be necessary from my understanding");
         orange.addView(orangeWriter);
         //binding.topPanel.addView(orange);
+        int red = new Random().nextInt(255);
+        int green = new Random().nextInt(255);
+        int blues = new Random().nextInt(255);
         binding.dark.setOnClickListener(view -> {
-            /*NoteyTheme darkTheme13 = new NoteyTheme();
-            darkTheme13.setActiveTheme(Themes.dark);
-            binding.getRoot().setBackgroundColor(darkTheme13.getActiveTheme().getPrimaryDark());
-            getRootActivity().recreate();*/
+            NoteyTheme darkTheme13 = new NoteyTheme();
+            //darkTheme13.setActiveTheme(Themes.dark);
+            //binding.getRoot().setBackgroundColor(darkTheme13.getActiveTheme().getPrimaryDark());
+            //getRootActivity().recreate();
+            //ThemeColors.setNewThemeColor(getRootActivity(), red, green, blues);
         });
         binding.blue.setOnClickListener(view -> {
-           /* NoteyTheme blueTheme12 = new NoteyTheme();
-            blueTheme12.setActiveTheme(Themes.blue);
-            binding.getRoot().setBackgroundColor(blueTheme12.getActiveTheme().getPrimaryDark());
-            getRootActivity().recreate();*/
+            NoteyTheme blueTheme12 = new NoteyTheme();
+            //blueTheme12.setActiveTheme(Themes.blue);
+           // binding.getRoot().setBackgroundColor(blueTheme12.getActiveTheme().getPrimaryDark());
+            //getRootActivity().recreate();
+            //ThemeColors.setNewThemeColor(getRootActivity(), red, green, blues);
         });
         binding.orange.setOnClickListener(view -> {
-            /*NoteyTheme orangeTheme1 = new NoteyTheme();
-            orangeTheme1.setActiveTheme(Themes.orange);
-            binding.getRoot().setBackgroundColor(orangeTheme1.getActiveTheme().getPrimaryDark());
-            getRootActivity().recreate();*/
+            NoteyTheme orangeTheme1 = new NoteyTheme();
+            //orangeTheme1.setActiveTheme(Themes.orange);
+            //binding.getRoot().setBackgroundColor(orangeTheme1.getActiveTheme().getPrimaryDark());
+            //getRootActivity().recreate();
+            //ThemeColors.setNewThemeColor(getRootActivity(), red, green, blues);
         });
     }
     @SuppressLint("ResourceType")
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         //User user = UserManager.loadUser(getContext());
+        new ThemeColors(getContext());
         binding = SettingsBinding.inflate(inflater, container, false);
-        binding.getRoot().setBackgroundColor(ThemeProvider.getMainTheme().getPrimaryDark());
+        //binding.getRoot().setBackgroundColor(ThemeProvider.getMainTheme().getPrimaryDark());
         RelativeLayout root = binding.getRoot();
         initThemeTest();
         MenuItem menuItem = new MenuItem(getRootActivity());

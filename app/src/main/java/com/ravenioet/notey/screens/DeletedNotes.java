@@ -8,7 +8,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -19,9 +18,6 @@ import com.ravenioet.notey.R;
 import com.ravenioet.notey.adapters.NoteAdapter;
 import com.ravenioet.notey.databinding.FragmentHomeBinding;
 import com.ravenioet.notey.init.ChildFragment;
-import com.ravenioet.notey.init.MainActivity;
-import com.ravenioet.notey.init.MainFragment;
-import com.ravenioet.notey.utils.PrefManager;
 import com.ravenioet.notey.viewmodel.NoteyViewModel;
 
 public class DeletedNotes extends ChildFragment {
@@ -29,7 +25,6 @@ public class DeletedNotes extends ChildFragment {
     private FragmentHomeBinding binding;
     private ProgressBar progressBar;
     NoteAdapter bookAdapter;
-    PrefManager prefManager;
     NoteyViewModel noteyViewModel;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -37,7 +32,6 @@ public class DeletedNotes extends ChildFragment {
                 new ViewModelProvider(requireActivity()).get(NoteyViewModel.class);
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
-        prefManager = PrefManager.getPrefMan(getActivity(), "notey-pref");
         View root = binding.getRoot();
         RecyclerView news_list = root.findViewById(R.id.new_recycler);
         progressBar = root.findViewById(R.id.progress);
