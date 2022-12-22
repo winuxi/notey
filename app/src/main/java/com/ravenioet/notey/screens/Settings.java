@@ -21,18 +21,17 @@ import com.ravenioet.notey.components.menus.MenuItem;
 import com.ravenioet.notey.components.layouts.NoteyRelativeLayout;
 import com.ravenioet.notey.components.provider.ThemeProvider;
 import com.ravenioet.notey.components.theme.NoteyTheme;
-import com.ravenioet.notey.components.theme.ThemeColors;
 import com.ravenioet.notey.components.theme.Themes;
 import com.ravenioet.notey.components.widget.NoteyTextView;
 import com.ravenioet.notey.databinding.SettingsBinding;
-import com.ravenioet.notey.init.MainFragment;
+import com.ravenioet.notey.init.ChildFragment;
 
 import java.util.Random;
 
-public class Settings extends MainFragment {
+public class Settings extends ChildFragment {
 
     private SettingsBinding binding;
-    boolean bioPass, pinCode, listAnim, animFirst = true, viewFirst = true, listFirst = true, vibrate;
+    boolean bioPass, pinCode, autoSave, listAnim, animFirst = true, viewFirst = true, listFirst = true, vibrate;
     String viewType, listType;
     @SuppressLint("ResourceType")
     public void initThemeTest(){
@@ -87,7 +86,7 @@ public class Settings extends MainFragment {
         });
         binding.orange.setOnClickListener(view -> {
             NoteyTheme orangeTheme1 = new NoteyTheme();
-            //orangeTheme1.setActiveTheme(Themes.orange);
+           // orangeTheme1.setActiveTheme(Themes.orange);
             //binding.getRoot().setBackgroundColor(orangeTheme1.getActiveTheme().getPrimaryDark());
             //getRootActivity().recreate();
             //ThemeColors.setNewThemeColor(getRootActivity(), red, green, blues);
@@ -97,7 +96,6 @@ public class Settings extends MainFragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         //User user = UserManager.loadUser(getContext());
-        new ThemeColors(getContext());
         binding = SettingsBinding.inflate(inflater, container, false);
         binding.getRoot().setBackgroundColor(ThemeProvider.getMainTheme().getPrimaryDark());
         RelativeLayout root = binding.getRoot();
@@ -135,6 +133,20 @@ public class Settings extends MainFragment {
 
             }
         });
+        binding.autoSave.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (getPrefMan().putBoolean("auto-save", b)) {
+                    if (b) {
+                        toast("auto save enabled");
+                    } else {
+                        toast("auto save disabled");
+                    }
+                }
+
+            }
+        });
+
         binding.listAnim.setOnCheckedChangeListener((compoundButton, b) -> {
             if (getPrefMan().putBoolean("list-anim", b)) {
                 if (b) {
@@ -229,6 +241,7 @@ public class Settings extends MainFragment {
     private void initPrefMan() {
         bioPass = getPrefMan().getBoolean("bio-pass");
         pinCode = getPrefMan().getBoolean("pin-code");
+        autoSave = getPrefMan().getBoolean("auto-save");
         listAnim = getPrefMan().getBoolean("list-anim");
         viewType = getPrefMan().getString("view-type");
         listType = getPrefMan().getString("list-type");
@@ -247,6 +260,7 @@ public class Settings extends MainFragment {
         binding.pinLock.setChecked(pinCode);
         binding.listAnim.setChecked(listAnim);
         binding.vibrate.setChecked(vibrate);
+        binding.autoSave.setChecked(autoSave);
     }
 
     public String getSelectedListType() {

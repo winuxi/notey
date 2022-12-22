@@ -14,8 +14,8 @@ public class NoteyColors {
     public static int lightBlue = Color.parseColor("#4dcaff");
     public static int lightBlueBg = Color.parseColor("#9ae1ff");
 
-    public static int orange = Color.parseColor("#ff8c00");
-    public static int lightOrange = Color.parseColor("#ff824d");
+    public static int orange = Color.parseColor("#EF6C00");
+    public static int lightOrange = Color.parseColor("#757575");
     public static int lightOrangeBg = Color.parseColor("#ffb89a");
 
 

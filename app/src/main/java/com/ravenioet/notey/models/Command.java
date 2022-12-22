@@ -6,6 +6,7 @@ public class Command {
     Note note;
     NoteListener listener;
     String message;
+    boolean takeAction = true;
     public Command(NoteListener listener) {
         this.listener = listener;
     }
@@ -32,5 +33,13 @@ public class Command {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public boolean isTakeAction() {
+        return takeAction;
+    }
+
+    public void setTakeAction(boolean takeAction) {
+        this.takeAction = takeAction;
     }
 }

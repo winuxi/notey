@@ -40,6 +40,8 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -54,6 +56,7 @@ public class AddOrEditNote extends ChildFragment implements NoteListener {
 
     private AddEditNoteBinding binding;
     Note note;
+    Note newNote;
     View root;
     NoteyViewModel noteViewModel;
     NoteListener listener;
@@ -68,21 +71,22 @@ public class AddOrEditNote extends ChildFragment implements NoteListener {
         boolean forEdit = false;
         if (noteViewModel.getSharedNoteEdit() != null) {
             forEdit = true;
+            if (isAutoSaveMode()) {
+                initAutoSave();
+            }
             note = noteViewModel.getSharedNoteEdit();
             nativeFlag = note.getFlag();
             binding.noteTitle.setText(note.getTitle());
             binding.noteBody.setText(note.getBody());
             if (note.getFlag() == 2) {
                 binding.icLock.setImageResource(R.drawable.ic_baseline_lock_24);
-            }
-            else if (note.getFlag() == 1) {
+            } else if (note.getFlag() == 1) {
                 binding.icLock.setImageResource(R.drawable.ic_baseline_lock_open_24);
-            }
-            else if (note.getFlag() == 3) {
+            } else if (note.getFlag() == 3) {
                 binding.icDelete.setImageResource(R.drawable.ic_baseline_restore_from_trash_24);
                 binding.icLock.setVisibility(View.GONE);
                 binding.icSave.setVisibility(View.GONE);
-            }else {
+            } else {
 
             }
 
@@ -113,15 +117,8 @@ public class AddOrEditNote extends ChildFragment implements NoteListener {
                 */
 
                 if (finalForEdit) {
-                    Command command = new Command(listener);
-                    Note newNote = new Note(noteTitle, noteDesc, "date", "", note.getFlag());
-                    if (note.isDiffer(newNote)) {
-                        newNote.setId(note.getId());
-                        command.setNote(newNote);
-                        noteViewModel.updateNote(command);
-                    } else {
-                        showSnack("Nothing to update");
-                    }
+                    newNote = new Note(noteTitle, noteDesc, "date", "", note.getFlag());
+                    updateNote(newNote);
                 } else {
                     note = new Note(noteTitle, noteDesc, "date", "", nativeFlag);
                     Command command = new Command(listener);
@@ -151,9 +148,9 @@ public class AddOrEditNote extends ChildFragment implements NoteListener {
             if (finalForEdit1) {
                 Command command = new Command(listener);
                 command.setNote(note);
-                if(note.getFlag() == 3){
+                if (note.getFlag() == 3) {
                     noteViewModel.restore(command);
-                }else {
+                } else {
                     noteViewModel.addToTrash(command);
                 }
             }
@@ -188,10 +185,51 @@ public class AddOrEditNote extends ChildFragment implements NoteListener {
         return rnd.nextInt(999999);
     }
 
+    Timer autoPusher;
+    boolean fromAuto = false;
+    public void initAutoSave() {
+        autoPusher = new Timer();
+        autoPusher.schedule(
+                new TimerTask() {
+                    @Override
+                    public void run() {
+                        getRootActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                fromAuto = true;
+                                binding.icSave.callOnClick();
+                                initAutoSave();
+                            }
+                        });
+                    }
+                },
+                30000
+        );
+    }
+    public void updateNote(Note newNote){
+        Command command = new Command(listener);
+        if (note.isDiffer(newNote)) {
+            newNote.setId(note.getId());
+            command.setNote(newNote);
+            note = newNote;
+            if(fromAuto) command.setTakeAction(false);
+            noteViewModel.updateNote(command);
+        } else {
+            if(!fromAuto){
+                showSnack("Nothing to update");
+            }else {
+                showSnack("Silent");
+                fromAuto = false;
+            }
+        }
+    }
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+        if(autoPusher != null){
+            autoPusher.cancel();
+        }
         noteViewModel.setSharedNote(null);
     }
 
@@ -240,8 +278,12 @@ public class AddOrEditNote extends ChildFragment implements NoteListener {
 
     @Override
     public void noteUpdated(Command command) {
-        showSnack(command.getMessage());
-        Navigation.findNavController(root).navigateUp();
+        if(command.isTakeAction()){
+            showSnack(command.getMessage());
+            Navigation.findNavController(root).navigateUp();
+        }else {
+            showSnack("here");
+        }
     }
 
     @Override
