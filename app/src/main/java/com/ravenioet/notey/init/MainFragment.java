@@ -34,4 +34,7 @@ public class MainFragment extends Fragment {
     public PrefManager getPrefMan() {
         return getRootActivity().getPrefMan();
     }
+    public boolean isAutoSaveMode(){
+        return getRootActivity().isAutoSaveEnabled();
+    }
 }

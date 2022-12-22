@@ -1,5 +1,6 @@
 package com.ravenioet.notey.init;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -7,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
 import com.ravenioet.core.manager.PrefManager;
-import com.ravenioet.notey.components.theme.ThemeColors;
 import com.ravenioet.notey.components.theme.Themes;
 import com.ravenioet.notey.guard.SecPack;
 import com.ravenioet.notey.interfaces.SecureInputListener;
@@ -27,6 +27,12 @@ public class ServiceProvider extends AppCompatActivity implements SecureInputLis
         AppCompatDelegate.setDefaultNightMode
                 (AppCompatDelegate.MODE_NIGHT_YES);
         //new ThemeColors(this);
+        //toolBarTheme();
+    }
+    public void toolBarTheme(){
+        if(getSupportActionBar() != null){
+            getSupportActionBar().getCustomView().setBackgroundColor(Color.RED);
+        }
     }
 
     private void initDependency() {
@@ -45,6 +51,9 @@ public class ServiceProvider extends AppCompatActivity implements SecureInputLis
     }
     public boolean isVibrationEnabled() {
         return getPrefMan().getBoolean("vibrate");
+    }
+    public boolean isAutoSaveEnabled() {
+        return getPrefMan().getBoolean("auto-save");
     }
 
     public boolean isPinCodeEnabled() {
