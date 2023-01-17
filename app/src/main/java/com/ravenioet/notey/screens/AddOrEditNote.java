@@ -1,9 +1,5 @@
 package com.ravenioet.notey.screens;
 
-import static android.app.Activity.RESULT_OK;
-import static android.content.Context.LAYOUT_INFLATER_SERVICE;
-
-import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,46 +7,24 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.DatePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.res.ResourcesCompat;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.ravenioet.notey.R;
-import com.ravenioet.notey.database.APIProvider;
 import com.ravenioet.notey.databinding.AddEditNoteBinding;
 import com.ravenioet.notey.init.ChildFragment;
-import com.ravenioet.notey.init.MainFragment;
 import com.ravenioet.notey.interfaces.NoteListener;
-import com.ravenioet.notey.models.Command;
+import com.ravenioet.notey.models.NCommand;
 import com.ravenioet.notey.models.Note;
 import com.ravenioet.notey.viewmodel.NoteyViewModel;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class AddOrEditNote extends ChildFragment implements NoteListener {
 
@@ -121,7 +95,7 @@ public class AddOrEditNote extends ChildFragment implements NoteListener {
                     updateNote(newNote);
                 } else {
                     note = new Note(noteTitle, noteDesc, "date", "", nativeFlag);
-                    Command command = new Command(listener);
+                    NCommand command = new NCommand(listener);
                     command.setNote(note);
                     noteViewModel.createNote(command);
                 }
@@ -146,7 +120,7 @@ public class AddOrEditNote extends ChildFragment implements NoteListener {
         boolean finalForEdit1 = forEdit;
         binding.icDelete.setOnClickListener(view -> {
             if (finalForEdit1) {
-                Command command = new Command(listener);
+                NCommand command = new NCommand(listener);
                 command.setNote(note);
                 if (note.getFlag() == 3) {
                     noteViewModel.restore(command);
@@ -161,7 +135,7 @@ public class AddOrEditNote extends ChildFragment implements NoteListener {
                 note.setFlag(1);
                 binding.icLock.setImageResource(R.drawable.ic_baseline_lock_open_24);
                 showSnack("Note Unsecured");
-                Command command = new Command(listener);
+                NCommand command = new NCommand(listener);
                 command.setNote(note);
                 noteViewModel.restore(command);
             }
@@ -169,7 +143,7 @@ public class AddOrEditNote extends ChildFragment implements NoteListener {
                 note.setFlag(2);
                 binding.icLock.setImageResource(R.drawable.ic_baseline_lock_24);
                 showSnack("Note Secured");
-                Command command = new Command(listener);
+                NCommand command = new NCommand(listener);
                 command.setNote(note);
                 noteViewModel.secure(command);
             }
@@ -207,7 +181,7 @@ public class AddOrEditNote extends ChildFragment implements NoteListener {
         );
     }
     public void updateNote(Note newNote){
-        Command command = new Command(listener);
+        NCommand command = new NCommand(listener);
         if (note.isDiffer(newNote)) {
             newNote.setId(note.getId());
             command.setNote(newNote);
@@ -271,13 +245,13 @@ public class AddOrEditNote extends ChildFragment implements NoteListener {
     }
 
     @Override
-    public void noteCreated(Command command) {
+    public void noteCreated(NCommand command) {
         showSnack(command.getMessage());
         Navigation.findNavController(root).navigateUp();
     }
 
     @Override
-    public void noteUpdated(Command command) {
+    public void noteUpdated(NCommand command) {
         if(command.isTakeAction()){
             showSnack(command.getMessage());
             Navigation.findNavController(root).navigateUp();
@@ -287,7 +261,7 @@ public class AddOrEditNote extends ChildFragment implements NoteListener {
     }
 
     @Override
-    public void noteDeleted(Command command) {
+    public void noteDeleted(NCommand command) {
         showSnack(command.getMessage());
         Navigation.findNavController(root).navigateUp();
     }

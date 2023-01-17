@@ -91,7 +91,7 @@ public class MenuItem extends RelativeLayout {
     public static int dpToPx(Context context,int dp) {
         return (int) (dp * context.getResources().getDisplayMetrics().density);
     }
-    public void onClick(){
+    public void onClick(String data){
         //setBackground(ThemeProvider.getTheme());
         new Timer().schedule(
                 new TimerTask() {
@@ -101,7 +101,7 @@ public class MenuItem extends RelativeLayout {
                             @Override
                             public void run() {
                                 hintView.setVisibility(VISIBLE);
-                                hintView.animateText("This is awesome android magic");
+                                hintView.animateText(data);
                             }
                         });
                     }

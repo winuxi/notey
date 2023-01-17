@@ -7,7 +7,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.ravenioet.notey.models.Command;
+import com.ravenioet.notey.models.NCommand;
 import com.ravenioet.notey.models.Note;
 import com.ravenioet.notey.repository.NoteyRepo;
 
@@ -35,22 +35,22 @@ public class NoteyViewModel extends AndroidViewModel {
     public LiveData<Note> loadOneNote(int noteId){
         return noteRepo.load_one_note(noteId);
     }
-    public void createNote(Command command){
+    public void createNote(NCommand command){
         noteRepo.save_note(command);
     }
-    public void updateNote(Command command){
+    public void updateNote(NCommand command){
         noteRepo.update_note(command);
     }
-    public void addToTrash(Command command){
+    public void addToTrash(NCommand command){
         command.getNote().setFlag(3);
         noteRepo.update_note(command);
     }
-    public void secure(Command command){
+    public void secure(NCommand command){
         command.getNote().setFlag(2);
         noteRepo.update_note(command);
     }
 
-    public void restore(Command command){
+    public void restore(NCommand command){
         command.getNote().setFlag(1);
         noteRepo.update_note(command);
     }

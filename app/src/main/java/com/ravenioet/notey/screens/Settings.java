@@ -11,20 +11,23 @@ import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.navigation.Navigation;
 
+import com.ravenioet.core.manager.FileManager;
+import com.ravenioet.core.models.Command;
 import com.ravenioet.notey.R;
 import com.ravenioet.notey.components.layouts.NoteyListCard;
 import com.ravenioet.notey.components.menus.MenuItem;
 import com.ravenioet.notey.components.layouts.NoteyRelativeLayout;
 import com.ravenioet.notey.components.provider.ThemeProvider;
 import com.ravenioet.notey.components.theme.NoteyTheme;
-import com.ravenioet.notey.components.theme.Themes;
 import com.ravenioet.notey.components.widget.NoteyTextView;
 import com.ravenioet.notey.databinding.SettingsBinding;
 import com.ravenioet.notey.init.ChildFragment;
+import com.ravenioet.notey.models.NCommand;
 
 import java.util.Random;
 
@@ -100,24 +103,46 @@ public class Settings extends ChildFragment {
         binding.getRoot().setBackgroundColor(ThemeProvider.getMainTheme().getPrimaryDark());
         RelativeLayout root = binding.getRoot();
         initThemeTest();
-        MenuItem menuItem = new MenuItem(getRootActivity());
-        menuItem.setId(102);
-        menuItem.setTitle("App info");
-        menuItem.setHint("click me please");
-        menuItem.setOnClickListener(new View.OnClickListener() {
+        MenuItem appInfo = new MenuItem(getRootActivity());
+        appInfo.setId(102);
+        appInfo.setTitle("App info");
+        appInfo.setHint("click me please");
+        appInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                menuItem.onClick();
+                appInfo.onClick("This is awesome android magic");
             }
         });
-        menuItem.below(binding.theme.getId());
-        binding.securitySettings.addView(menuItem);
+        appInfo.below(binding.theme.getId());
+
+        binding.securitySettings.addView(appInfo);
+
+        MenuItem backup = new MenuItem(getRootActivity());
+        backup.setId(103);
+        backup.setTitle("Back Up");
+        backup.setHint("Create backup");
+        backup.setOnClickListener(view -> {
+            backup.onClick("Creating backup in internal storage...");
+            FileManager fileManager = FileManager.getInstance(getContext());
+            Command command = fileManager.create_dir(2,"Notey/Stosh");
+            if(command.isSuccess()){
+                backup.onClick("");
+                backup.onClick("Backup created.");
+            }else {
+                backup.onClick("");
+                backup.onClick("Backup not created.");
+            }
+            Toast.makeText(getContext(),command.getMessage(),Toast.LENGTH_LONG).show();
+        });
+        backup.below(appInfo.getId());
+
+        binding.securitySettings.addView(backup);
 
         NoteyListCard noteyListCard = new NoteyListCard(getRootActivity());
         noteyListCard.setImage(R.drawable.ic_baseline_sticky_note_2_24);
-        noteyListCard.setTitle("Wait what");
+        noteyListCard.setTitle("Whats new");
         noteyListCard.setBody("This is view created by dynamically");
-        noteyListCard.below(menuItem.getId());
+        noteyListCard.below(backup.getId());
         binding.securitySettings.addView(noteyListCard);
         initPrefMan();
         binding.bioPass.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

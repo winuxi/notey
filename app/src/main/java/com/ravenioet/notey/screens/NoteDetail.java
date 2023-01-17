@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -15,7 +14,7 @@ import androidx.navigation.Navigation;
 import com.ravenioet.notey.R;
 import com.ravenioet.notey.databinding.NoteDetailBinding;
 import com.ravenioet.notey.interfaces.NoteListener;
-import com.ravenioet.notey.models.Command;
+import com.ravenioet.notey.models.NCommand;
 import com.ravenioet.notey.models.Note;
 import com.ravenioet.notey.viewmodel.NoteyViewModel;
 
@@ -50,7 +49,7 @@ public class NoteDetail extends Fragment implements NoteListener {
         }
         binding.delete.setOnClickListener(view -> {
             if(note != null){
-                Command command = new Command(this);
+                NCommand command = new NCommand(this);
                 command.setNote(note);
                 bookViewModel.addToTrash(command);
             }
@@ -77,17 +76,17 @@ public class NoteDetail extends Fragment implements NoteListener {
     }
 
     @Override
-    public void noteCreated(Command note) {
+    public void noteCreated(NCommand note) {
 
     }
 
     @Override
-    public void noteUpdated(Command note) {
+    public void noteUpdated(NCommand note) {
 
     }
 
     @Override
-    public void noteDeleted(Command note) {
+    public void noteDeleted(NCommand note) {
 
     }
 

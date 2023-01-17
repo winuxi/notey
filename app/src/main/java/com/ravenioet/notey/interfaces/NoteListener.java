@@ -1,11 +1,10 @@
 package com.ravenioet.notey.interfaces;
 
-import com.ravenioet.notey.models.Command;
-import com.ravenioet.notey.models.Note;
+import com.ravenioet.notey.models.NCommand;
 
 public interface NoteListener {
-    void noteCreated(Command note);
-    void noteUpdated(Command note);
-    void noteDeleted(Command note);
+    void noteCreated(NCommand note);
+    void noteUpdated(NCommand note);
+    void noteDeleted(NCommand note);
     void error(String error);
 }

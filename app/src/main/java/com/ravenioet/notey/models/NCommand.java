@@ -2,12 +2,12 @@ package com.ravenioet.notey.models;
 
 import com.ravenioet.notey.interfaces.NoteListener;
 
-public class Command {
+public class NCommand {
     Note note;
     NoteListener listener;
     String message;
     boolean takeAction = true;
-    public Command(NoteListener listener) {
+    public NCommand(NoteListener listener) {
         this.listener = listener;
     }
 

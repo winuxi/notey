@@ -8,7 +8,7 @@ import androidx.lifecycle.LiveData;
 
 import com.ravenioet.notey.database.NoteDao;
 import com.ravenioet.notey.database.NoteyDB;
-import com.ravenioet.notey.models.Command;
+import com.ravenioet.notey.models.NCommand;
 import com.ravenioet.notey.models.Note;
 
 import java.util.List;
@@ -55,7 +55,7 @@ public class NoteyRepo {
         return noteDao.load_one_note(noteId);
     }
 
-    public void update_note(Command command) {
+    public void update_note(NCommand command) {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         Handler handler = new Handler(Looper.getMainLooper());
         executor.execute(() -> {
@@ -78,7 +78,7 @@ public class NoteyRepo {
         });
     }
 
-    public void save_note(Command command) {
+    public void save_note(NCommand command) {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         Handler handler = new Handler(Looper.getMainLooper());
         executor.execute(() -> {

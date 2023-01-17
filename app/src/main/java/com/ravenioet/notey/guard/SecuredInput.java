@@ -23,33 +23,20 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import com.ravenioet.notey.R;
-import com.ravenioet.notey.databinding.NoteDetailBinding;
 import com.ravenioet.notey.databinding.SecuredInputBinding;
-import com.ravenioet.notey.guard.FingerHandler;
 import com.ravenioet.notey.init.MainActivity;
 import com.ravenioet.notey.init.MainFragment;
-import com.ravenioet.notey.interfaces.NoteListener;
-import com.ravenioet.notey.interfaces.SecureInputListener;
-import com.ravenioet.notey.models.Command;
-import com.ravenioet.notey.models.Note;
 import com.ravenioet.notey.utils.NoteUtils;
-import com.ravenioet.notey.viewmodel.NoteyViewModel;
 
 import java.io.IOException;
 import java.security.InvalidAlgorithmParameterException;
@@ -60,7 +47,6 @@ import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
-import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 

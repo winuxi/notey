@@ -3,8 +3,7 @@ package com.ravenioet.notey.utils;
 import com.ravenioet.notey.guard.SecPack;
 import com.ravenioet.notey.interfaces.NoteListener;
 import com.ravenioet.notey.interfaces.SecureInputListener;
-import com.ravenioet.notey.models.Command;
-import com.ravenioet.notey.models.Note;
+import com.ravenioet.notey.models.NCommand;
 
 public class NoteUtils {
     NoteListener noteListener;
@@ -24,17 +23,17 @@ public class NoteUtils {
         this.noteListener = noteListener;
     }
 
-    public void noteCreated(Command command){
+    public void noteCreated(NCommand command){
         if(noteListener != null){
             noteListener.noteCreated(command);
         }
     }
-    public void noteUpdated(Command command){
+    public void noteUpdated(NCommand command){
         if(noteListener != null){
             noteListener.noteUpdated(command);
         }
     }
-    public void noteDeleted(Command command){
+    public void noteDeleted(NCommand command){
         if(noteListener != null){
             noteListener.noteDeleted(command);
         }

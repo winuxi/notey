@@ -12,7 +12,7 @@ import androidx.sqlite.db.SupportSQLiteOpenHelper;
 
 import com.ravenioet.notey.models.Note;
 
-@Database(entities = {Note.class}, version = 1)
+@Database(entities = {Note.class}, version = 2)
 public abstract class NoteyDB extends RoomDatabase {
     private static NoteyDB instance;
 
